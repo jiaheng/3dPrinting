@@ -3,8 +3,8 @@ Specification = function() {};
 Specification.components = [
   {
     "centreX": 0,
-    "centreY": 37,
-    "centreZ": -9.25,
+    "centreY": 0,
+    "centreZ": 0,
     "id": 1,
     "type": "Spring",
     "thickness": 1.5,
@@ -22,8 +22,8 @@ Specification.components = [
     "height": 13
   },
   {
-    "centreX": 0,
-    "centreY": 0,
+    "centreX": 50,
+    "centreY": 50,
     "centreZ": 0,
     "id": 2,
     "type": "Anchor",
