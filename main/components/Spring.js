@@ -157,10 +157,12 @@ function Spring() {
 		var newX = otherConnectP.getX().getValue() - connectP.getX().getValue();
 		var newY = otherConnectP.getY().getValue() - connectP.getY().getValue();
 		var newZ = otherConnectP.getZ().getValue() - connectP.getZ().getValue();
+		/*
 		console.log(otherConnectP.getX().getValue());
 		console.log(otherConnectP.getY().getValue());
 		console.log(otherConnectP.getZ().getValue());
 		console.log('new x: ' + newX + '\tnew y: ' + newY + '\tnew z: ' + newZ);
+		*/
 		spring.setCentre(newX, newY, newZ);
 	}
 

@@ -102,6 +102,17 @@ function Anchor() {
 		point.setAt(x, y, z);
 		return point;
 	}
-
+	
+	anchor.placeWith = function(otherComponent) {
+		if (otherComponent.getTypeName() != 'Spring')
+			throw new Error("Anchor can only place with a spring");
+		var centre = anchor.getCentre();
+		var connectP = anchor.getConnectPoint();
+		var otherConnectP = otherComponent.getConnectPoint();
+		var newX = otherConnectP.getX().getValue() - connectP.getX().getValue();
+		var newY = otherConnectP.getY().getValue() - connectP.getY().getValue();
+		var newZ = otherConnectP.getZ().getValue() - connectP.getZ().getValue();
+		anchor.setCentre(newX, newY, newZ);
+	}
 	return anchor;
 }
