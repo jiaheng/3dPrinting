@@ -1,6 +1,7 @@
-var Component = require('./Component.js').Component
-var AnchorSpecification = require('../interface/AnchorSpecification.js').AnchorSpecification
-var Point = require('../geometry/Point.js').Point
+var Component = require('./Component.js').Component;
+var AnchorSpecification = require('../interface/AnchorSpecification.js').AnchorSpecification;
+var Point = require('../geometry/Point.js').Point;
+var Spindle = require('./Spindle.js').Spindle;
 
 module.exports.Anchor = Anchor
 
@@ -114,5 +115,13 @@ function Anchor() {
 		var newZ = otherConnectP.getZ().getValue() - connectP.getZ().getValue();
 		anchor.setCentre(newX, newY, newZ);
 	}
+	
+	anchor.getSpindle = function() {
+		var spindle = new Spindle(height, centreHoleRadius);
+		var centre = anchor.getCentre();
+		spindle.setCentre(centre);
+		return spindle;
+	}
+	
 	return anchor;
 }

@@ -1,6 +1,7 @@
 var Component = require('./Component.js').Component
 var SpringSpecification = require('../interface/SpringSpecification.js').SpringSpecification
 var Point = require('../geometry/Point.js').Point
+var Spindle = require('./Spindle.js').Spindle;
 
 module.exports.Spring = Spring
 
@@ -177,6 +178,13 @@ function Spring() {
 		point.setAt(x, y, z);
 		return point;
 	}
-
+	
+	spring.getSpindle = function() { 
+		var spindle = new Spindle(height, centreHoleRadius);
+		var centre = spring.getCentre();
+		spindle.setCentre(centre);
+		return spindle;
+	}
+	
 	return spring;
 }
