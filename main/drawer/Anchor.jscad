@@ -5,6 +5,8 @@ include("Rectangle.jscad");
 Anchor = function() {
 };
 
+Anchor.colour = [0.2, 0.2, 0.8];
+
 Anchor.make = function(specification, params) {
 	var anchor;
 
@@ -27,9 +29,8 @@ Anchor.make = function(specification, params) {
 	fork = Rectangle.make(cubeSpec, params);
 	// make connector
 	var connector;
-	var connectorLength = 5; // constant length
-	var connectorWidth = specification.handWidth + 2; // connector must be
-														// wider
+	var connectorLength = specification.connectorLength;
+	var connectorWidth = specification.connectorWidth;
 	cubeSpec.width = connectorWidth;
 	cubeSpec.length = connectorLength;
 	connector = Rectangle.make(cubeSpec, params);
@@ -37,13 +38,13 @@ Anchor.make = function(specification, params) {
 			(specification.maxRadius + connectorLength) / 2, 0, 0 ]);
 	// make hole in the connector
 	var hole;
-	var holeLength = 2; // constant length
-	cubeSpec.width = specification.connectSize;
+	var holeLength = specification.connectLength; // constant length
+	cubeSpec.width = specification.connectWidth;
 	cubeSpec.length = holeLength;
 	cube = Rectangle.make(cubeSpec, params);
 	// inner hole is rounded
 	cylinderSpec.height = specification.thickness;
-	cylinderSpec.radius = specification.connectSize / 2;
+	cylinderSpec.radius = specification.connectWidth / 2;
 	cylinder = Circle.make(cylinderSpec, params);
 	cylinder = cylinder.translate([ -holeLength / 2, 0, 0 ]);
 	hole = cube.union(cylinder);
@@ -76,10 +77,10 @@ Anchor.make = function(specification, params) {
 		points: [
 				[cubeSpec.length/2, cubeSpec.width/2, cubeSpec.height/2], // 0
 				[cubeSpec.length/2, cubeSpec.width/2, -cubeSpec.height/2], // 1
-				[cubeSpec.length/2, cubeSpec.width/2 + 1, cubeSpec.height/2], // 2
-				[cubeSpec.length/2, cubeSpec.width/2 + 1, -cubeSpec.height/2], // 3
-				[cubeSpec.length/2 - 1, cubeSpec.width/2, cubeSpec.height/2], // 4
-				[cubeSpec.length/2 - 1, cubeSpec.width/2, -cubeSpec.height/2] // 5
+				[cubeSpec.length/2, specification.connectorWidth/2, cubeSpec.height/2], // 2
+				[cubeSpec.length/2, specification.connectorWidth/2, -cubeSpec.height/2], // 3
+				[cubeSpec.length/2 - 2, cubeSpec.width/2, cubeSpec.height/2], // 4 TODO: cubeSpec width is 2. the -1 need to be variable
+				[cubeSpec.length/2 - 2, cubeSpec.width/2, -cubeSpec.height/2] // 5
 				],
 		triangles: [
 					[1,3,5],
@@ -95,10 +96,10 @@ Anchor.make = function(specification, params) {
 		points: [
 				[cubeSpec.length/2, -cubeSpec.width/2, cubeSpec.height/2], // 0
 				[cubeSpec.length/2, -cubeSpec.width/2, -cubeSpec.height/2], // 1
-				[cubeSpec.length/2, -cubeSpec.width/2 - 1, cubeSpec.height/2], // 2 // TODO: cubeSpec width is 2. the -1 need to be variable
-				[cubeSpec.length/2, -cubeSpec.width/2 - 1, -cubeSpec.height/2], // 3
-				[cubeSpec.length/2-1, -cubeSpec.width/2 , cubeSpec.height/2], // 4
-				[cubeSpec.length/2-1, -cubeSpec.width/2 , -cubeSpec.height/2] // 5
+				[cubeSpec.length/2, -specification.connectorWidth/2, cubeSpec.height/2], // 2 // 
+				[cubeSpec.length/2, -specification.connectorWidth/2, -cubeSpec.height/2], // 3
+				[cubeSpec.length/2 - 2, -cubeSpec.width/2 , cubeSpec.height/2], // 4
+				[cubeSpec.length/2 - 2, -cubeSpec.width/2 , -cubeSpec.height/2] // 5
 				],
 		triangles: [
 					[3,1,5],

@@ -20,7 +20,7 @@
 
 Spindle = function() {};
 
-Spindle.colour = [1,0,0];
+Spindle.colour = [0.9, 0.1, 0.1];
 
 Spindle.make = function(specification, params) {
 	specification.radius = specification.radius - params.printerMinRes

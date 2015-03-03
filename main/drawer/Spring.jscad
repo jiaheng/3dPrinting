@@ -6,9 +6,6 @@ include("Utils.jscad");
 Spring = function() {
 };
 
-/**
- * 
- */
 Spring.make = function(specification, params) {
 	var spring;
 	var spiral = Spiral.make(specification, params);
@@ -36,28 +33,22 @@ Spring.make = function(specification, params) {
 
 	// make rounded cube for connecting anchor
 	var connect;
-	cubeSpec.length = specification.roundedCubeLength;
+	cubeSpec.length = specification.roundedCubeLength + specification.innerCylinderRadius;
 	cubeSpec.width = specification.roundedCubeWidth;
 	cubeSpec.height = specification.roundedCubeHeight;
 	cube = Rectangle.make(cubeSpec, params);
-	// cube = cube.rotateZ(90);
 	// rounded cube on one side of the rectangle
 	cylinderSpec.height = specification.roundedCubeHeight;
 	cylinderSpec.radius = specification.roundedCubeWidth / 2;
 	cylinder = Circle.make(cylinderSpec, params);
 	cylinder = cylinder
-			.translate([ specification.roundedCubeLength / 2, 0, 0 ]);
+			.translate([ cubeSpec.length / 2, 0, 0 ]);
 	connect = cube.union(cylinder);
 	connect = connect
 			.rotateZ(-90)
-			.translate(
-					[
-							0,
-							-specification.innerCylinderRadius
-									- specification.roundedCubeLength / 2 + 1,
-							specification.height
-									- (specification.roundedCubeHeight + specification.thickness)
-									/ 2 ]);
+			.translate([0,
+						-cubeSpec.length/2,
+						specification.height - (specification.roundedCubeHeight + specification.thickness)/ 2 ]);
 	spring = spring.union(connect);
 	/*
 	 * No longer needed cubeSpec.length = specification.roundedCubeLength;

@@ -9,18 +9,18 @@ function Spring() {
 	var spring = new Component();
 
 	const DEFAULT_THICKNESS = 1.5;
-	const DEFAULT_TURN = 5;
-	const DEFAULT_MAX_RADIUS = 15;
-	const DEFAULT_START_RADIUS = 5;
-	const DEFAULT_OUTER_CYLINDER_RADIUS = 6;
-	const DEFAULT_OUTER_CYLINDER_HEIGHT = 7;
-	const DEFAULT_INNER_CYLINDER_RADIUS = 4;
-	const DEFAULT_INNER_CYLINDER_HEIGHT = 13;
-	const DEFAULT_CENTRE_HOLE_RADIUS = 1;
-	const DEFAULT_ROUNDED_CUBE_HEIGHT = 6;
-	const DEFAULT_ROUNDED_CUBE_LENGTH = 4;
-	const DEFAULT_ROUNDED_CUBE_WIDTH = 2;
-	const DEFAULT_HEIGHT = 13;
+	const DEFAULT_TURN = 8;
+	const DEFAULT_MAX_RADIUS = 30;
+	const DEFAULT_START_RADIUS = 14;
+	const DEFAULT_OUTER_CYLINDER_RADIUS = 15;
+	const DEFAULT_OUTER_CYLINDER_HEIGHT = 15;
+	const DEFAULT_INNER_CYLINDER_RADIUS = 10;
+	const DEFAULT_INNER_CYLINDER_HEIGHT = 30;
+	const DEFAULT_CENTRE_HOLE_RADIUS = 4;
+	const DEFAULT_ROUNDED_CUBE_HEIGHT = 20;
+	const DEFAULT_ROUNDED_CUBE_LENGTH = 5;
+	const DEFAULT_ROUNDED_CUBE_WIDTH = 4;
+	const DEFAULT_HEIGHT = 30;
 
 	var thickness = DEFAULT_THICKNESS;
 	var turn = DEFAULT_TURN;
@@ -174,7 +174,7 @@ function Spring() {
 		var y = centre.getY().getValue() - innerCylinderRadius
 				- roundedCubeLength + 1;
 		var z = centre.getZ().getValue() + height
-				- (roundedCubeHeight + thickness) / 2;
+				- (thickness) / 2;
 		point.setAt(x, y, z);
 		return point;
 	}
@@ -182,7 +182,10 @@ function Spring() {
 	spring.getSpindle = function() { 
 		var spindle = new Spindle(height, centreHoleRadius);
 		var centre = spring.getCentre();
-		spindle.setCentre(centre);
+		var x = centre.getX().getValue();
+		var y = centre.getY().getValue();
+		var z = centre.getZ().getValue() + (height-thickness)/2;
+		spindle.setCentre(x, y, z);
 		return spindle;
 	}
 	

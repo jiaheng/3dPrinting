@@ -8,23 +8,27 @@ module.exports.Anchor = Anchor
 function Anchor() {
 	var anchor = new Component();
 
-	const DEFAULT_THICKNESS = 6;
-	const DEFAULT_MAX_RADIUS = 25;
-	const DEFAULT_CONNECT_SIZE = 2;
-	const DEFAULT_CENTRE_HOLE_RADIUS = 1;
-	const DEFAULT_CENTRE_RING_RADIUS = 4;
-	const DEFAULT_HEIGHT = 6;
-	const DEFAULT_HAND_WIDTH = 2; // CHANGE THE NAME
-	const DEFAULT_CONNECTOR_LENGTH = 5
-
+	const DEFAULT_THICKNESS = 10;
+	const DEFAULT_MAX_RADIUS = 50;
+	const DEFAULT_CONNECT_WIDTH = 4;
+	const DEFAULT_CONNECT_LENGTH = 4;
+	const DEFAULT_CENTRE_HOLE_RADIUS = 3;
+	const DEFAULT_CENTRE_RING_RADIUS = 12;
+	const DEFAULT_HEIGHT = 10;
+	const DEFAULT_HAND_WIDTH = 4; // CHANGE THE NAME
+	const DEFAULT_CONNECTOR_LENGTH = 9;
+	const DEFAULT_CONNECTOR_WIDTH = 8;
+	
 	var thickness = DEFAULT_THICKNESS;
 	var maxRadius = DEFAULT_MAX_RADIUS;
-	var connectSize = DEFAULT_CONNECT_SIZE;
+	var connectWidth = DEFAULT_CONNECT_WIDTH;
+	var connectLength = DEFAULT_CONNECT_LENGTH;
 	var centreHoleRadius = DEFAULT_CENTRE_HOLE_RADIUS;
 	var centreRingRadius = DEFAULT_CENTRE_RING_RADIUS;
 	var height = DEFAULT_HEIGHT;
 	var handWidth = DEFAULT_HAND_WIDTH; // CHANGE THE NAME
 	var connectorLength = DEFAULT_CONNECTOR_LENGTH;
+	var connectorWidth = DEFAULT_CONNECTOR_WIDTH;
 	
 	DEFAULT_MAX_RADIUS = 55;
 	
@@ -46,10 +50,14 @@ function Anchor() {
 		return maxRadius;
 	}
 
-	anchor.getConnectSize = function() {
-		return connectSize;
+	anchor.getConnectWidth = function() {
+		return connectWidth;
 	}
 
+	anchor.getConnectLength = function() {
+		return connectLength;
+	}
+	
 	anchor.getCentreHoleRadius = function() {
 		return centreHoleRadius;
 	}
@@ -66,6 +74,14 @@ function Anchor() {
 		return handWidth;
 	}
 
+	anchor.getConnectorLength = function() {
+		return connectorLength;
+	}
+	
+	anchor.getConnectorWidth = function() {
+		return connectorWidth;
+	}
+	
 	anchor.setThickness = function(newThickness) {
 		thickness = newThickness;
 	}
@@ -74,10 +90,14 @@ function Anchor() {
 		maxRadius = newMaxRadius;
 	}
 
-	anchor.setConnectSize = function(newConnectSize) {
-		connectSize = newConnectSize;
+	anchor.setConnectSize = function(w) {
+		connectWidth = w;
 	}
 
+	anchor.setConnectLength = function(l) {
+		connecLength = l;
+	}
+	
 	anchor.setCentreHoleRadius = function(newCentreHoleRadius) {
 		centreHoleRadius = newCentreHoleRadius;
 	}
@@ -94,12 +114,20 @@ function Anchor() {
 		handWidth = newHandWidth;
 	}
 
+	anchor.setConnectorLength = function(l) {
+		connectorLength = l;
+	}
+	
+	anchor.setConnectorWidth = function(w) {
+		connectorWidth = w;
+	}
+	
 	anchor.getConnectPoint = function() {
 		var point = new Point();
 		var centre = anchor.getCentre();
 		var x = centre.getX().getValue();
 		var y = centre.getY().getValue() + maxRadius + connectorLength;
-		var z = centre.getZ().getValue();
+		var z = centre.getZ().getValue() + height/2;
 		point.setAt(x, y, z);
 		return point;
 	}
@@ -119,7 +147,10 @@ function Anchor() {
 	anchor.getSpindle = function() {
 		var spindle = new Spindle(height, centreHoleRadius);
 		var centre = anchor.getCentre();
-		spindle.setCentre(centre);
+		var x = centre.getX().getValue();
+		var y = centre.getY().getValue();
+		var z = centre.getZ().getValue();
+		spindle.setCentre(x, y, z);
 		return spindle;
 	}
 	
