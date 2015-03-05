@@ -35,7 +35,7 @@ function Rectangle() {
 	var rectangle = new Shape()
 	var width = new ConstrainableValue()
 	var length = new ConstrainableValue()
-
+	var height = new ConstrainableValue();
 	width.setValue(DEFAULT_WIDTH)
 
 	rectangle.getType = function() {
@@ -43,7 +43,7 @@ function Rectangle() {
 	}
 
 	rectangle.getWidth = function() {
-		return width
+		return width.getValue();
 	}
 
 	rectangle.setWidth = function(w) {
@@ -51,13 +51,21 @@ function Rectangle() {
 	}
 
 	rectangle.getLength = function() {
-		return length
+		return length.getValue()
 	}
 
 	rectangle.setLength = function(len) {
 		length.setValue(len)
 	}
 
+	rectangle.getHeight = function() {
+		return height.getValue()
+	}
+
+	rectangle.setHeight = function(h) {
+		height.setValue(h)
+	}
+	
 	rectangle.getDistanceToRightBoundary = function() {
 		return length.getValue() / 2
 	}

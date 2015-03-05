@@ -1,6 +1,7 @@
 var Component = require('./Component.js').Component;
 var AnchorSpecification = require('../interface/AnchorSpecification.js').AnchorSpecification;
 var Point = require('../geometry/Point.js').Point;
+var Rectangle = require('../geometry/Rectangle.js').Rectangle;
 var Spindle = require('./Spindle.js').Spindle;
 
 module.exports.Anchor = Anchor
@@ -82,6 +83,24 @@ function Anchor() {
 		return connectorWidth;
 	}
 	
+	anchor.getBaseCoor = function() {
+		var centre = anchor.getCentre();
+		var point = new Point();
+		var x = centre.getX().getValue();
+		var y = centre.getY().getValue();
+		var z = centre.getZ().getValue() - thickness/2;
+		point.setAt(x,y,z);
+		return point;
+	}
+	
+	anchor.getWidth = function() {
+		return maxRadius * 2;
+	}
+	
+	anchor.getLength = function() {
+		return maxRadius * 2;
+	}
+	
 	anchor.setThickness = function(newThickness) {
 		thickness = newThickness;
 	}
@@ -152,6 +171,29 @@ function Anchor() {
 		var z = centre.getZ().getValue();
 		spindle.setCentre(x, y, z);
 		return spindle;
+	}
+	
+	anchor.generateAuxillaryComponents = function() {
+		return [anchor.getSpindle()];
+	}
+	
+	anchor.addSupport = function(floorZ) {
+		var baseCoor = anchor.getBaseCoor();
+		var bottomZ = baseCoor.getZ().getValue();
+		
+		var x = baseCoor.getX().getValue();
+		var y = baseCoor.getY().getValue();
+		var z = (bottomZ + floorZ)/2;
+		var length = centreRingRadius*2;
+		var width = centreRingRadius*2;
+		var height = (bottomZ - floorZ);
+		
+		var rectangle = new Rectangle();
+		rectangle.setLength(length);
+		rectangle.setWidth(width);
+		rectangle.setHeight(height);
+		rectangle.setCentre(x,y,z);
+		return rectangle;
 	}
 	
 	return anchor;

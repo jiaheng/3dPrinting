@@ -10,7 +10,7 @@ function Spring() {
 
 	const DEFAULT_THICKNESS = 1.5;
 	const DEFAULT_TURN = 8;
-	const DEFAULT_MAX_RADIUS = 30;
+	const DEFAULT_MAX_RADIUS = 40;
 	const DEFAULT_START_RADIUS = 14;
 	const DEFAULT_OUTER_CYLINDER_RADIUS = 15;
 	const DEFAULT_OUTER_CYLINDER_HEIGHT = 15;
@@ -97,6 +97,24 @@ function Spring() {
 		return height;
 	}
 
+	spring.getBaseCoor = function() {
+		var centre = spring.getCentre();
+		var point = new Point();
+		var x = centre.getX().getValue();
+		var y = centre.getY().getValue();
+		var z = centre.getZ().getValue() - thickness/2;
+		point.setAt(x,y,z);
+		return point;
+	}
+	
+	spring.getWidth = function() {
+		return maxRadius * 2;
+	}
+	
+	spring.getLength = function() {
+		return maxRadius * 2;
+	}
+	
 	spring.setThickness = function(newThickness) {
 		thickness = newThickness;
 	}
@@ -187,6 +205,10 @@ function Spring() {
 		var z = centre.getZ().getValue() + (height-thickness)/2;
 		spindle.setCentre(x, y, z);
 		return spindle;
+	}
+	
+	spring.generateAuxillaryComponents = function() {
+		return [spring.getSpindle()];
 	}
 	
 	return spring;
