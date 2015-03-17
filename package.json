@@ -1,0 +1,14 @@
+{
+  "name": "untitled",
+  "description": "",
+  "author": {
+    "name": "Jia Heng"
+  },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "devDependencies": {
+    "mocha": "^2.2.1",
+    "unit.js": ">= 1.0.0 < 2.0.0"
+  }
+}
