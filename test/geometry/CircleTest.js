@@ -47,7 +47,7 @@ describe('Circle', function() {
 		})
 
 		it('should set the radius of the Circle', function() {
-			circle.getRadius().getValue().should.equal(10)
+			circle.getRadius().should.equal(10)
 		})
 	})
 
@@ -59,7 +59,7 @@ describe('Circle', function() {
 		})
 
 		it('should be twice the radius', function() {
-			circle.getDiameter().getValue().should.equal(2 * radius)
+			circle.getDiameter().should.equal(2 * radius)
 		})
 	})
 

@@ -46,11 +46,11 @@ function Circle() {
 	}
 
 	circle.getRadius = function() {
-		return radius
+		return radius.getValue()
 	}
 
 	circle.getDiameter = function() {
-		return diameter
+		return diameter.getValue()
 	}
 
 	circle.toSpecification = function() {

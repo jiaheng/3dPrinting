@@ -31,20 +31,19 @@ var RectangleSpecification = require('../interface/RectangleSpecification.js').R
 module.exports.Rectangle = Rectangle
 
 function Rectangle() {
-	const
-	DEFAULT_WIDTH = 0
+	const DEFAULT_WIDTH = 0
 	var rectangle = new Shape()
 	var width = new ConstrainableValue()
 	var length = new ConstrainableValue()
 	var height = new ConstrainableValue();
 	width.setValue(DEFAULT_WIDTH)
-
+	
 	rectangle.getType = function() {
 		return "Rectangle";
 	}
 
 	rectangle.getWidth = function() {
-		return width;
+		return width.getValue();
 	}
 
 	rectangle.setWidth = function(w) {
@@ -52,7 +51,7 @@ function Rectangle() {
 	}
 
 	rectangle.getLength = function() {
-		return length;
+		return length.getValue();
 	}
 
 	rectangle.setLength = function(len) {
@@ -60,7 +59,7 @@ function Rectangle() {
 	}
 
 	rectangle.getHeight = function() {
-		return height;
+		return height.getValue();
 	}
 
 	rectangle.setHeight = function(h) {

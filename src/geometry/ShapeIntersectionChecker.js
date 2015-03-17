@@ -58,8 +58,8 @@ function ShapeIntersectionChecker() {
 	}
 
 	var checkIfTwoCirclesIntersect = function() {
-		var firstRadius = first.getRadius().getValue()
-		var secondRadius = second.getRadius().getValue()
+		var firstRadius = first.getRadius()
+		var secondRadius = second.getRadius()
 		var distanceBetween = first.getCentre().distanceToOnXYPlane(
 				second.getCentre())
 		return distanceBetween <= (firstRadius + secondRadius)
@@ -71,8 +71,7 @@ function ShapeIntersectionChecker() {
 	}
 
 	var checkIfTwoRectanglesIntersectHorizontally = function() {
-		var combinedLength = second.getLength().getValue()
-				+ second.getLength().getValue()
+		var combinedLength = second.getLength() + second.getLength()
 		var centreXDifference = first.getCentre().distanceToOnAxis(
 				second.getCentre(), 'X')
 
@@ -80,8 +79,7 @@ function ShapeIntersectionChecker() {
 	}
 
 	var checkIfTwoRectanglesIntersectVertically = function() {
-		var combinedWidth = first.getWidth().getValue()
-				+ second.getWidth().getValue()
+		var combinedWidth = first.getWidth() + second.getWidth()
 		var centreYDifference = first.getCentre().distanceToOnAxis(
 				second.getCentre(), 'Y')
 		return Math.abs(centreYDifference) <= (combinedWidth / 2)
@@ -95,7 +93,7 @@ function ShapeIntersectionChecker() {
 	var checkIfCircleAndRectangleIntersect = function(circle, rectangle) {
 		var circleBounds = new Rectangle()
 		circleBounds.setCentre(circle.getCentre())
-		var radius = circle.getRadius().getValue()
+		var radius = circle.getRadius()
 		circleBounds.setLength(radius * 2)
 		circleBounds.setWidth(radius * 2)
 		first = rectangle

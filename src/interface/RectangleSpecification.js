@@ -31,8 +31,8 @@ module.exports.RectangleSpecification = RectangleSpecification
 function RectangleSpecification(rectangle) {
 	var spec = new Specification(rectangle)
 	spec.type = "Rectangle"
-	spec.length = rectangle.getLength().getValue();
-	spec.width = rectangle.getWidth().getValue();
-	spec.height = rectangle.getHeight().getValue();
+	spec.length = rectangle.getLength();
+	spec.width = rectangle.getWidth();
+	spec.height = rectangle.getHeight();
 	return spec
 }

@@ -33,7 +33,7 @@ function testCircleSpecification(circleSpec, circle) {
 	
 	describe('CircleSpecification', function() {	
 		it('should have the same radius as the Circle that created it', function() {
-			circleSpec.radius.should.equal(circle.getRadius().getValue())
+			circleSpec.radius.should.equal(circle.getRadius())
 		})
 
 		it('should behave like a Specification', function() {

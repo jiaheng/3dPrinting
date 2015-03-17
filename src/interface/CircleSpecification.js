@@ -31,6 +31,6 @@ module.exports.CircleSpecification = CircleSpecification
 function CircleSpecification(circle) {
 	var spec = new Specification(circle)
 	spec.type = "Circle"
-	spec.radius = circle.getRadius().getValue()
+	spec.radius = circle.getRadius();
 	return spec
 }

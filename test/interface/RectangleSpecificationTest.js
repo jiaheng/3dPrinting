@@ -38,7 +38,7 @@ function testRectangleSpecification(rectangleSpec, rectangle) {
 		})
 		
 		it('should have the same length as the Rectangle that created it', function() {
-			rectangleSpec.length.should.equal(rectangle.getLength().getValue())
+			rectangleSpec.length.should.equal(rectangle.getLength())
 		})
 
 		it('should have the same centre x coordinate as the Rectangle that created it',
@@ -58,7 +58,7 @@ function testRectangleSpecification(rectangleSpec, rectangle) {
 
 		it('should have the same width as the Rectangle that created it',
 		   function() {
-			rectangleSpec.width.should.equal(rectangle.getWidth().getValue())
+			rectangleSpec.width.should.equal(rectangle.getWidth())
 		})
 
 		it('should have the type property of "Rectangle"', function() {

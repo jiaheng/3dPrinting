@@ -41,7 +41,7 @@ describe('Rectangle', function() {
 
 	describe('#getWidth', function() {
 		it('should have a default value of 0', function() {
-			rectangle.getWidth().getValue().should.equal(0)
+			rectangle.getWidth().should.equal(0)
 		})
 	})
 
