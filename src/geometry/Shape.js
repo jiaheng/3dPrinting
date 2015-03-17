@@ -36,27 +36,24 @@ function Shape() {
 	var intersectionChecker = new ShapeIntersectionChecker()
 
 	var setCentre1 = function(point) {
-		centre = new Point();
-		centre.getX().setValue(point.getX().getValue());
-		centre.getY().setValue(point.getY().getValue());
-		centre.getZ().setValue(point.getZ().getValue());
+		var x = point.getX().getValue();
+		var y = point.getY().getValue();
+		var z = point.getZ().getValue();
+		centre.setAt(x, y, z);
 	}
 
 	var setCentre2 = function(x, y, z) {
-		centre = new Point();
-		centre.getX().setValue(x);
-		centre.getY().setValue(y);
-		centre.getZ().setValue(z);
+		centre.setAt(x, y, z);
 	}
 
 	return {
 		setCentre : function(arg1, arg2, arg3) {
-			if (arguments.length == 1)
+			if (arg1 != undefined && arg2 === undefined && arg3 === undefined)
 				setCentre1(arg1);
-			else if (arguments.length == 3)
+			else if (arg1 != undefined && arg2 != undefined && arg3 != undefined)
 				setCentre2(arg1, arg2, arg3);
 			else
-				throw new Error('Invalid arguments length');
+				throw new Error('Invalid arguments');
 			/*
 			 * centre = new Point()
 			 * centre.getX().setValue(point.getX().getValue())

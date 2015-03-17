@@ -35,6 +35,7 @@ function Spring() {
 	var roundedCubeLength = DEFAULT_ROUNDED_CUBE_LENGTH;
 	var roundedCubeWidth = DEFAULT_ROUNDED_CUBE_WIDTH;
 	var height = DEFAULT_HEIGHT;
+	
 	spring.setCentre(0, 0, 0);
 
 	spring.toSpecification = function() {

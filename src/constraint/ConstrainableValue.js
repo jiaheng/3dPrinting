@@ -43,7 +43,7 @@ var ConstraintModule = require('./Constraint.js')
 module.exports.ConstrainableValue = ConstrainableValue 
 
 function ConstrainableValue () {
- 	var value = 0
+ 	var value = null
  	var rigid = false
  	var constraints = []
  	var self = this // Allows public methods to be called inside private methods

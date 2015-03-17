@@ -9,6 +9,8 @@ function Spindle(h, r) {
 	var height;
 	var radius;
 	
+	spindle.setCentre(0, 0, 0);
+	
 	spindle.getHeight = function() {
 		return height
 	}

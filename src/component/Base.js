@@ -11,6 +11,8 @@ function Base() {
 	var height = new ConstrainableValue()
 	var parts = []
 
+	base.setCentre(0, 0, 0);
+	
 	base.getParts = function() {
 		return parts
 	}

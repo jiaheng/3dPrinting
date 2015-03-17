@@ -44,7 +44,7 @@ function Rectangle() {
 	}
 
 	rectangle.getWidth = function() {
-		return width.getValue();
+		return width;
 	}
 
 	rectangle.setWidth = function(w) {
@@ -52,7 +52,7 @@ function Rectangle() {
 	}
 
 	rectangle.getLength = function() {
-		return length.getValue();
+		return length;
 	}
 
 	rectangle.setLength = function(len) {
@@ -60,7 +60,7 @@ function Rectangle() {
 	}
 
 	rectangle.getHeight = function() {
-		return height.getValue();
+		return height;
 	}
 
 	rectangle.setHeight = function(h) {
