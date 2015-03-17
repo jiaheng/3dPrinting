@@ -36,7 +36,7 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 	if (placementShapeType == undefined)
 		placementShapeType = boundaryShape
 
-	var placeable = Component(boundaryShape) 
+	var placeable = Component(boundaryShape)
 	var placementShape = new placementShapeType()
 	placementShape.getCentre().sameAs(placeable.getBoundingShape().getCentre())
 	var adjacentComponents = []
@@ -87,14 +87,11 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 		placeable.placeAdjacentTo(otherPlaceable, 'Y', 'Front', 'Back')
 	}
 
-	placeable.placeAdjacentTo = function(otherPlaceable,
-		                                   axis, 
-		                                   directionThisToOther,
-		                                   directionOtherToThis) {
+	placeable.placeAdjacentTo = function(otherPlaceable, axis,
+			directionThisToOther, directionOtherToThis) {
 		otherPlaceable.addAdjacentComponent(placeable, directionThisToOther)
 		var offset = calculateOffsetToMakeComponentsAdjacent(otherPlaceable,
-											                                   directionThisToOther,
-											                                   directionOtherToThis)
+				directionThisToOther, directionOtherToThis)
 		var axes = Point.getAxesNamesWithout(axis)
 		var centre = placeable.getCentre()
 		var otherPlaceableCentre = otherPlaceable.getCentre()
@@ -103,9 +100,8 @@ function PlaceableComponent(boundaryShape, placementShapeType) {
 		adjacentComponents.push(otherPlaceable)
 	}
 
-	var calculateOffsetToMakeComponentsAdjacent = function(otherPlaceable, 
-		                                                     directionThisToOther,
-		                                                     directionOtherToThis) {
+	var calculateOffsetToMakeComponentsAdjacent = function(otherPlaceable,
+			directionThisToOther, directionOtherToThis) {
 		function getDistance(direction) {
 			return 'getDistanceTo' + direction + 'Boundary'
 		}

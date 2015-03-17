@@ -20,15 +20,16 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  */
 
-Circle = function() {};
+Circle = function() {
+};
 
-Circle.make = function (specification, params) {
+Circle.make = function(specification, params) {
 	var radius = Math.round(specification.radius)
-  var cylinder = CSG.cylinder({
-                                start: [0, 0,-specification.height / 2],
-    	                          end: [0, 0, specification.height / 2], 
-    	                          radius: radius, 
-    	                          resolution: params.circleRes
-    	                        });
-  return cylinder;
+	var cylinder = CSG.cylinder({
+		start : [ 0, 0, -specification.height / 2 ],
+		end : [ 0, 0, specification.height / 2 ],
+		radius : radius,
+		resolution : params.circleRes
+	});
+	return cylinder;
 };

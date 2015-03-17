@@ -4,30 +4,23 @@ var BaseSpecification = require('../interface/BaseSpecification.js').BaseSpecifi
 var Circle = require('../geometry/Circle.js').Circle
 var Line = require('../geometry/Line.js').Line
 
-
 module.exports.Base = Base
 
 function Base() {
-	var base = Component() 
+	var base = Component()
 	var height = new ConstrainableValue()
 	var parts = []
 
 	base.getParts = function() {
 		return parts
 	}
-/*
-	base.getCircles = function() {
-		return parts.filter(function(element) {
-			return element.getType != undefined && element.getType() == 'Circle'
-		})
-	}
-
-	base.getLines = function() {
-		return parts.filter(function(element) {
-			return element instanceof Line
-		})
-	}
-*/
+	/*
+	 * base.getCircles = function() { return parts.filter(function(element) {
+	 * return element.getType != undefined && element.getType() == 'Circle' }) }
+	 * 
+	 * base.getLines = function() { return parts.filter(function(element) {
+	 * return element instanceof Line }) }
+	 */
 	base.addPart = function(part) {
 		parts.push(part)
 	}
@@ -55,6 +48,6 @@ function Base() {
 	base.toSpecification = function() {
 		return new BaseSpecification(base)
 	}
-	
+
 	return base
 }

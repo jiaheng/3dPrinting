@@ -42,44 +42,45 @@ function Component(boundaryShape) {
 
 	var id = Component.makeNextID()
 	return {
-		boundingShape: new boundaryShape(),
+		boundingShape : new boundaryShape(),
 
-		getID: function() {
+		getID : function() {
 			return id
 		},
 
-		getBoundingShape: function() {
+		getBoundingShape : function() {
 			return this.boundingShape
 		},
 
-		getCentre: function() {
+		getCentre : function() {
 			return this.boundingShape.getCentre()
 		},
 
-		setCentre: function(arg1, arg2, arg3) {
+		setCentre : function(arg1, arg2, arg3) {
 			this.boundingShape.setCentre(arg1, arg2, arg3)
 		},
 
-		checkCentreFullyDefined: function() {
-			if (this.getCentre().isNotFullyDefined()) 
+		checkCentreFullyDefined : function() {
+			if (this.getCentre().isNotFullyDefined())
 				throw "Point not fully defined"
 		},
 
-		toSpecification: function() {
+		toSpecification : function() {
 			this.checkCentreFullyDefined()
 			return new ComponentSpecification(this)
 		},
 
 		// Should be overriden by all subclassed to give their name
-		getTypeName: function() {
+		getTypeName : function() {
 			return "Component"
 		},
 
-		isTouching: function(otherComponent) {
-			return this.boundingShape.isTouching(otherComponent.getBoundingShape())
+		isTouching : function(otherComponent) {
+			return this.boundingShape.isTouching(otherComponent
+					.getBoundingShape())
 		},
 
-		toString: function() {
+		toString : function() {
 			var string = this.getTypeName() + ' { \n\tID: ' + id + '\n'
 			string += '\tCentre point: ' + this.getCentre().toString() + '\n'
 			string += '}'

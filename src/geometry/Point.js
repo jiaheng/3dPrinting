@@ -29,7 +29,7 @@ var ConstrainableValue = require('../constraint/ConstrainableValue.js').Constrai
 module.exports.Point = Point
 
 Point.getAxesNames = function() {
-	return ['X', 'Y', 'Z']
+	return [ 'X', 'Y', 'Z' ]
 }
 
 Point.getAxesNamesWithout = function(axis) {
@@ -56,9 +56,9 @@ function Point() {
 	var z = new ConstrainableValue()
 
 	this.isAtSameLocationAs = function(point) {
-		return (x.getValue() == point.getX().getValue() 
-			     && y.getValue() == point.getY().getValue()
-			     && z.getValue() == point.getZ().getValue())
+		return (x.getValue() == point.getX().getValue()
+				&& y.getValue() == point.getY().getValue() && z.getValue() == point
+				.getZ().getValue())
 	}
 
 	this.fixX = function(xValue) {
@@ -88,7 +88,7 @@ function Point() {
 	this.fixAt = function(xValue, yValue, zValue) {
 		this.fixX(xValue)
 		this.fixY(yValue)
-		this.fixZ(zValue)		
+		this.fixZ(zValue)
 	}
 
 	this.setAt = function(xValue, yValue, zValue) {
@@ -97,7 +97,8 @@ function Point() {
 		z.setValue(zValue)
 	}
 
-	// Offsets one Point from another by a set of offests, one for each of the x, 
+	// Offsets one Point from another by a set of offests, one for each of the
+	// x,
 	// y and z components of this Point.
 	this.offsetFrom = function(otherPoint, offsets) {
 		x.offsetByConstant(otherPoint.getX(), offsets[0])
@@ -106,7 +107,8 @@ function Point() {
 	}
 
 	this.toString = function() {
-		return '(' + x.getValue() +', ' + y.getValue() + ', ' + z.getValue() + ')'
+		return '(' + x.getValue() + ', ' + y.getValue() + ', ' + z.getValue()
+				+ ')'
 	}
 
 	this.isNotFullyDefined = function() {
@@ -116,7 +118,7 @@ function Point() {
 	this.isFullyDefined = function() {
 		return x.isSet() && y.isSet() && z.isSet()
 	}
-	
+
 	this.samePointOnAxes = function(otherPoint, axes) {
 		for (var i = 0; i < axes.length; i++) {
 			var getAxis = 'get' + axes[i]
@@ -141,7 +143,8 @@ function Point() {
 
 	this.distanceToOnAxis = function(otherPoint, axis) {
 		var getAxis = 'get' + axis
-		var xDifference = Math.abs(this[getAxis]().getValue() - otherPoint[getAxis]().getValue())
+		var xDifference = Math.abs(this[getAxis]().getValue()
+				- otherPoint[getAxis]().getValue())
 		if (this[getAxis]().getValue() > otherPoint[getAxis]().getValue())
 			xDifference = -xDifference
 		return xDifference
@@ -149,14 +152,16 @@ function Point() {
 
 	this.differOnlyOnAxis = function(otherPoint, axis) {
 		var getAxis = 'get' + axis
-		var result = this[getAxis]().getValue() != otherPoint[getAxis]().getValue()
+		var result = this[getAxis]().getValue() != otherPoint[getAxis]()
+				.getValue()
 		var axes = Point.getAxesNamesWithout(axis)
 		for (var i = axes.length - 1; i >= 0; i--) {
 			getAxis = 'get' + axes[i]
-			result = result 
-			         && this[getAxis]().getValue() == otherPoint[getAxis]().getValue()
+			result = result
+					&& this[getAxis]().getValue() == otherPoint[getAxis]()
+							.getValue()
 		}
 
 		return result
 	}
-} 
+}

@@ -29,39 +29,41 @@ function PlaceableComponentGroup() {
 	var components = []
 
 	return {
-		getSize: function() {
+		getSize : function() {
 			return components.length
 		},
 
-		addComponent: function(component) {
+		addComponent : function(component) {
 			components.push(component)
 		},
 
-		getComponents: function() {
+		getComponents : function() {
 			return components
 		},
 
 		// Adds any Components to be generated from PlaceableComponents
 		// To be overwritten in subclasses
-		getAuxillaryComponents: function() {
+		getAuxillaryComponents : function() {
 			return []
 		},
 
-		onlyAdjacentComponentsTouching: function() {
+		onlyAdjacentComponentsTouching : function() {
 			for (var i = 0; i < components.length; i++) {
 				for (var j = 0; j < components.length && j != i; j++) {
-					if (componentsTouchingButNotAdjacent(components[i], components[j]))
+					if (componentsTouchingButNotAdjacent(components[i],
+							components[j]))
 						return false
 				}
 			}
 			return true
 		},
 
-		findTouchingNonAdjacentComponents: function() {
+		findTouchingNonAdjacentComponents : function() {
 			var overlapping = []
 			for (var i = 0; i < components.length; i++) {
 				for (var j = 0; j < components.length && j != i; j++) {
-					if (componentsTouchingButNotAdjacent(components[i], components[j]))
+					if (componentsTouchingButNotAdjacent(components[i],
+							components[j]))
 						overlapping.push(components[i], components[j])
 				}
 			}
@@ -71,21 +73,24 @@ function PlaceableComponentGroup() {
 			})
 		},
 
-		checkCanBeDrawn: function() {
+		checkCanBeDrawn : function() {
 			if (!this.onlyAdjacentComponentsTouching()) {
-				var errorMessage = this.createOverlappingComponentErrorMessage()
+				var errorMessage = this
+						.createOverlappingComponentErrorMessage()
 				throw new Error(errorMessage)
 			}
 		},
 
-		createOverlappingComponentErrorMessage: function() {
+		createOverlappingComponentErrorMessage : function() {
 			var string = "Invalid ComponentGroup - contains overlapping Components: \n"
 			var overlapping = this.findTouchingNonAdjacentComponents()
 			for (var i = overlapping.length - 1; i >= 0; i--) {
 				string += overlapping[i].toString() + ',\n'
-			};
+			}
+			;
 
-			string = string.substring (0, string.length - 2) // remove trailing ,\n
+			string = string.substring(0, string.length - 2) // remove trailing
+															// ,\n
 			return string
 		}
 	}

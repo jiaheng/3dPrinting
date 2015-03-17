@@ -8,8 +8,8 @@ const LIBRARY_HEADER = 'Specification = function() {};\n\n';
 // A prefix to allow OpenJSCAD access to the GearSpecifications
 const COMPONENT_PREFIX = 'Specification.components = ';
 
-// A suffix to make sure that the GearSpecification array is well-formed 
-//OpenJSCAD
+// A suffix to make sure that the GearSpecification array is well-formed
+// OpenJSCAD
 const COMPONENT_SUFFIX = ';';
 
 function SpecificationWriter(specFilePath) {

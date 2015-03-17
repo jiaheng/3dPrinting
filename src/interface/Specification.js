@@ -27,14 +27,14 @@
 module.exports.Specification = Specification
 
 function Specification(source) {
-	var spec =  new Object()
+	var spec = new Object()
 	addCentreValues()
 
 	spec.addSpecification = function(spec) {
-    for (property in spec) {
-      this[property] = spec[property]
-    }
-  }
+		for (property in spec) {
+			this[property] = spec[property]
+		}
+	}
 
 	function addCentreValues() {
 		var centre = source.getCentre()
@@ -43,5 +43,5 @@ function Specification(source) {
 		spec.centreZ = centre.getZ().getValue()
 	}
 
-	return spec	
+	return spec
 }

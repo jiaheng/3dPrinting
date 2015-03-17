@@ -102,19 +102,19 @@ function Spring() {
 		var point = new Point();
 		var x = centre.getX().getValue();
 		var y = centre.getY().getValue();
-		var z = centre.getZ().getValue() - thickness/2;
-		point.setAt(x,y,z);
+		var z = centre.getZ().getValue() - thickness / 2;
+		point.setAt(x, y, z);
 		return point;
 	}
-	
+
 	spring.getWidth = function() {
 		return maxRadius * 2;
 	}
-	
+
 	spring.getLength = function() {
 		return maxRadius * 2;
 	}
-	
+
 	spring.setThickness = function(newThickness) {
 		thickness = newThickness;
 	}
@@ -177,11 +177,11 @@ function Spring() {
 		var newY = otherConnectP.getY().getValue() - connectP.getY().getValue();
 		var newZ = otherConnectP.getZ().getValue() - connectP.getZ().getValue();
 		/*
-		console.log(otherConnectP.getX().getValue());
-		console.log(otherConnectP.getY().getValue());
-		console.log(otherConnectP.getZ().getValue());
-		console.log('new x: ' + newX + '\tnew y: ' + newY + '\tnew z: ' + newZ);
-		*/
+		 * console.log(otherConnectP.getX().getValue());
+		 * console.log(otherConnectP.getY().getValue());
+		 * console.log(otherConnectP.getZ().getValue()); console.log('new x: ' +
+		 * newX + '\tnew y: ' + newY + '\tnew z: ' + newZ);
+		 */
 		spring.setCentre(newX, newY, newZ);
 	}
 
@@ -191,25 +191,24 @@ function Spring() {
 		var x = centre.getX().getValue();
 		var y = centre.getY().getValue() - innerCylinderRadius
 				- roundedCubeLength + 1;
-		var z = centre.getZ().getValue() + height
-				- (thickness) / 2;
+		var z = centre.getZ().getValue() + height - (thickness) / 2;
 		point.setAt(x, y, z);
 		return point;
 	}
-	
-	spring.getSpindle = function() { 
+
+	spring.getSpindle = function() {
 		var spindle = new Spindle(height, centreHoleRadius);
 		var centre = spring.getCentre();
 		var x = centre.getX().getValue();
 		var y = centre.getY().getValue();
-		var z = centre.getZ().getValue() + (height-thickness)/2;
+		var z = centre.getZ().getValue() + (height - thickness) / 2;
 		spindle.setCentre(x, y, z);
 		return spindle;
 	}
-	
+
 	spring.generateAuxillaryComponents = function() {
-		return [spring.getSpindle()];
+		return [ spring.getSpindle() ];
 	}
-	
+
 	return spring;
 }

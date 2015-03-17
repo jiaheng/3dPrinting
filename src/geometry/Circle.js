@@ -33,13 +33,13 @@ module.exports.Circle = Circle
 
 function Circle() {
 	var circle = Shape()
-	var radius = new ConstrainableValue() 
+	var radius = new ConstrainableValue()
 	var diameter = new ConstrainableValue()
-	diameter.scaledByConstant(radius, 2)   
+	diameter.scaledByConstant(radius, 2)
 
 	circle.getType = function() {
 		return 'Circle'
-	}  
+	}
 
 	circle.setRadius = function(r) {
 		radius.setValue(r)
@@ -58,9 +58,11 @@ function Circle() {
 		return new CircleSpecification(circle)
 	}
 
-	var checkCanGenerateSpecification = function() {		
-		if (radius.isNotSet()) throw new Error("Radius not set")
-		if (circle.getCentre().isNotFullyDefined()) throw new Error("Centre not fully defined")
+	var checkCanGenerateSpecification = function() {
+		if (radius.isNotSet())
+			throw new Error("Radius not set")
+		if (circle.getCentre().isNotFullyDefined())
+			throw new Error("Centre not fully defined")
 	}
 
 	circle.getDistanceToRightBoundary = function() {
@@ -81,4 +83,3 @@ function Circle() {
 
 	return circle
 }
-

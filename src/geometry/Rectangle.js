@@ -31,7 +31,8 @@ var RectangleSpecification = require('../interface/RectangleSpecification.js').R
 module.exports.Rectangle = Rectangle
 
 function Rectangle() {
-	const DEFAULT_WIDTH = 0
+	const
+	DEFAULT_WIDTH = 0
 	var rectangle = new Shape()
 	var width = new ConstrainableValue()
 	var length = new ConstrainableValue()
@@ -39,7 +40,7 @@ function Rectangle() {
 	width.setValue(DEFAULT_WIDTH)
 
 	rectangle.getType = function() {
-		return "Rectangle"
+		return "Rectangle";
 	}
 
 	rectangle.getWidth = function() {
@@ -47,51 +48,54 @@ function Rectangle() {
 	}
 
 	rectangle.setWidth = function(w) {
-		width.setValue(w)
+		width.setValue(w);
 	}
 
 	rectangle.getLength = function() {
-		return length.getValue()
+		return length.getValue();
 	}
 
 	rectangle.setLength = function(len) {
-		length.setValue(len)
+		length.setValue(len);
 	}
 
 	rectangle.getHeight = function() {
-		return height.getValue()
+		return height.getValue();
 	}
 
 	rectangle.setHeight = function(h) {
-		height.setValue(h)
+		height.setValue(h);
 	}
-	
+
 	rectangle.getDistanceToRightBoundary = function() {
-		return length.getValue() / 2
+		return length.getValue() / 2;
 	}
 
 	rectangle.getDistanceToLeftBoundary = function() {
-		return -length.getValue() / 2
+		return -length.getValue() / 2;
 	}
 
 	rectangle.getDistanceToFrontBoundary = function() {
-		return width.getValue() / 2
+		return width.getValue() / 2;
 	}
 
 	rectangle.getDistanceToBackBoundary = function() {
-		return -width.getValue() / 2
+		return -width.getValue() / 2;
 	}
 
 	rectangle.toSpecification = function() {
-		checkCanGenerateSpecification()
-		return new RectangleSpecification(this)
+		checkCanGenerateSpecification();
+		return new RectangleSpecification(this);
 	}
 
 	var checkCanGenerateSpecification = function() {
-		if (rectangle.getCentre().isNotFullyDefined()) throw new Error("Centre not fully defined")
-		if (length.isNotSet()) throw new Error("Length not set")
-		if (width.isNotSet()) throw new Error("Width not set")
+		if (rectangle.getCentre().isNotFullyDefined())
+			throw new Error("Centre not fully defined");
+		if (length.isNotSet())
+			throw new Error("Length not set");
+		if (width.isNotSet())
+			throw new Error("Width not set");
 	}
 
-	return rectangle
+	return rectangle;
 }

@@ -20,19 +20,21 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  */
 
-Utils = function() {};
-
-Utils.toDegrees = function(radians) {
-    return 180 / Math.PI * radians;
+Utils = function() {
 };
 
-Utils.removeCentreHole = function removeCentreHole(component, specification, params) {
-  if(specification.centreHoleRadius > 0) {
-    var spec = {};
-    spec.radius = specification.centreHoleRadius;
-    spec.height = specification.height*2;
-    var centerHole = Circle.make(spec, params);
-    component = component.subtract(centerHole);
-  } 
-  return component;
+Utils.toDegrees = function(radians) {
+	return 180 / Math.PI * radians;
+};
+
+Utils.removeCentreHole = function removeCentreHole(component, specification,
+		params) {
+	if (specification.centreHoleRadius > 0) {
+		var spec = {};
+		spec.radius = specification.centreHoleRadius;
+		spec.height = specification.height * 2;
+		var centerHole = Circle.make(spec, params);
+		component = component.subtract(centerHole);
+	}
+	return component;
 };

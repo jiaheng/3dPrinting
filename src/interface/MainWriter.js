@@ -65,9 +65,8 @@ function MainWriter(mainPath, jscadDirectories) {
   }
   
   /*
-   * ** Get from Daniel's code **
-	 * Dynamically includes components specified in the Configuration file into 
-	 * the main file.
+	 * ** Get from Daniel's code ** Dynamically includes components specified in
+	 * the Configuration file into the main file.
 	 */
 	var generateIncludesFromJscadDirectories = function() {
 		var includeString = ""

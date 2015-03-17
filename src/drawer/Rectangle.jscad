@@ -20,13 +20,13 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
  */
 
-Rectangle = function() {};
+Rectangle = function() {
+};
 
 Rectangle.make = function(specification, params) {
-  return CSG.cube({
-          center: [0, 0, 0],
-          radius: [specification.length / 2, 
-                   specification.width / 2,
-                   specification.height / 2]
-    })
+	return CSG.cube({
+		center : [ 0, 0, 0 ],
+		radius : [ specification.length / 2, specification.width / 2,
+				specification.height / 2 ]
+	})
 }

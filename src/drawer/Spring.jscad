@@ -33,7 +33,8 @@ Spring.make = function(specification, params) {
 
 	// make rounded cube for connecting anchor
 	var connect;
-	cubeSpec.length = specification.roundedCubeLength + specification.innerCylinderRadius;
+	cubeSpec.length = specification.roundedCubeLength
+			+ specification.innerCylinderRadius;
 	cubeSpec.width = specification.roundedCubeWidth;
 	cubeSpec.height = specification.roundedCubeHeight;
 	cube = Rectangle.make(cubeSpec, params);
@@ -41,14 +42,17 @@ Spring.make = function(specification, params) {
 	cylinderSpec.height = specification.roundedCubeHeight;
 	cylinderSpec.radius = specification.roundedCubeWidth / 2;
 	cylinder = Circle.make(cylinderSpec, params);
-	cylinder = cylinder
-			.translate([ cubeSpec.length / 2, 0, 0 ]);
+	cylinder = cylinder.translate([ cubeSpec.length / 2, 0, 0 ]);
 	connect = cube.union(cylinder);
 	connect = connect
 			.rotateZ(-90)
-			.translate([0,
-						-cubeSpec.length/2,
-						specification.height - (specification.roundedCubeHeight + specification.thickness)/ 2 ]);
+			.translate(
+					[
+							0,
+							-cubeSpec.length / 2,
+							specification.height
+									- (specification.roundedCubeHeight + specification.thickness)
+									/ 2 ]);
 	spring = spring.union(connect);
 	/*
 	 * No longer needed cubeSpec.length = specification.roundedCubeLength;
