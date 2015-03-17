@@ -1,7 +1,7 @@
 var Drawer = require('../interface/Drawer.js').Drawer;
-var Spring = require('../components/Spring.js').Spring;
-var Anchor = require('../components/Anchor.js').Anchor;
-var BaseFactory = require('../components/BaseFactory.js').BaseFactory;
+var Spring = require('../src/component/Spring.js').Spring;
+var Anchor = require('../src/component/Anchor.js').Anchor;
+var BaseFactory = require('../src/component/BaseFactory.js').BaseFactory;
 
 var allComponents = [];
 var drawer = new Drawer();

@@ -8,7 +8,7 @@ const MAIN_METHOD = 'function main(params) {\n' +
                     
 const PARAMS_METHOD_START = '\nfunction getParameterDefinitions() {\n\treturn [';
 const PARAMS_METHOD_END = '];\n}\n\n';
-const STATIC_PARAMETER_PATH = './interface/parameterDefinitions.txt';
+const STATIC_PARAMETER_PATH = __dirname + '/parameterDefinitions.txt';
 
 function MainWriter(mainPath, jscadDirectories) {
   
@@ -51,17 +51,17 @@ function MainWriter(mainPath, jscadDirectories) {
   var getComponentSelectionValues = function(components) {
     var values = ['"All"']; // default value
     for (var i = components.length - 1; i >= 0; i--) { 
-			values.push(components[i].getID())
+			values.push(components[i].getID());
 		}
-		return values
+		return values;
   }
   
   var getComponentSelectionCaptions = function(components) {
     var captions = ['"All"']; // default value
     for (var i = components.length - 1; i >= 0; i--) { 
-			captions.push('"Just Component ID #' + components[i].getID() + '"')
+			captions.push('"Just Component ID #' + components[i].getID() + '"');
 		}
-		return captions
+		return captions;
   }
   
   /*
@@ -73,8 +73,8 @@ function MainWriter(mainPath, jscadDirectories) {
 		var includeString = ""
 		jscadDirectories.forEach(function(directory) {
 			includeString += generateIncludesFromJscadDirectory(directory)
-		})
-		return includeString
+		});
+		return includeString;
 	}
 
 	var generateIncludesFromJscadDirectory = function(directory) {
@@ -83,6 +83,6 @@ function MainWriter(mainPath, jscadDirectories) {
 			if (file.match(/\.jscad$/))
 				includeString += 'include("' + file + '")\n'
 		})
-		return includeString
+		return includeString;
 	}
 }

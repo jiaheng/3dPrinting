@@ -31,7 +31,7 @@
  * COMPONENTS
  */
 exports.jscadComponentDirectories = [
-																			'./drawer'
+																			__dirname + '/../drawer'
 																		]
 
 /*
@@ -39,7 +39,7 @@ exports.jscadComponentDirectories = [
  * Drawer.
  */
 exports.sourceDir = [
-															'./drawer'
+															__dirname + '/../drawer'
 														]
 														//.concat(exports.jscadComponentDirectories)
 
@@ -48,13 +48,13 @@ exports.sourceDir = [
  * program executes successfully. These are the files that are used to generate
  * the 3D CAD product.
  */
-exports.targetDir = './examples/application_output/'
+exports.targetDir = './application_output/'
 
 /*
  * The location of the static parameters that are always included in the 3D
  * Drawer
  */
-exports.paramFilePath = '../3dDrawer/parameterDefinitions.txt'
+exports.paramFilePath = __dirname + '/parameterDefinitions.txt'
 
 /*
  * The target location of the Specification file

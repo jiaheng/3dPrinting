@@ -24,7 +24,7 @@
  * A 3D line built from two Points with a width.
  */
 var Point = require('../geometry/Point.js').Point
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var ConstrainableValue = require('../constraint/ConstrainableValue.js').ConstrainableValue
 var LineSpecification = require('../interface/LineSpecification.js').LineSpecification
 
 module.exports.Line = Line

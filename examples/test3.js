@@ -1,7 +1,7 @@
-var Drawer = require('../interface/Drawer.js').Drawer;
-var Spring = require('../components/Spring.js').Spring;
-var Anchor = require('../components/Anchor.js').Anchor;
-var Spindle = require('../components/Spindle.js').Spindle;
+var Drawer = require('../src/interface/Drawer.js').Drawer;
+var Spring = require('../src/component/Spring.js').Spring;
+var Anchor = require('../src/component/Anchor.js').Anchor;
+var Spindle = require('../src/component/Spindle.js').Spindle;
 
 var drawer = new Drawer();
 var spring = new Spring();

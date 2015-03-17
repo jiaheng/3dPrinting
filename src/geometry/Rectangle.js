@@ -25,7 +25,7 @@
  */
 var Point = require('../geometry/Point.js').Point
 var Shape = require('../geometry/Shape.js').Shape
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var ConstrainableValue = require('../constraint/ConstrainableValue.js').ConstrainableValue
 var RectangleSpecification = require('../interface/RectangleSpecification.js').RectangleSpecification
 
 module.exports.Rectangle = Rectangle

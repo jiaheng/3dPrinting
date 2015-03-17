@@ -25,7 +25,7 @@
  */
 var Point = require('../geometry/Point.js').Point
 var Shape = require('../geometry/Shape.js').Shape
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var ConstrainableValue = require('../constraint/ConstrainableValue.js').ConstrainableValue
 var CircleSpecification = require('../interface/CircleSpecification.js').CircleSpecification
 var Utilities = require('../Utilities.js')
 

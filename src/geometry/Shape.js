@@ -26,7 +26,7 @@
 var util = require('util')
 var Point = require('../geometry/Point.js').Point
 var ShapeIntersectionChecker = require('../geometry/ShapeIntersectionChecker.js').ShapeIntersectionChecker
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var ConstrainableValue = require('../constraint/ConstrainableValue.js').ConstrainableValue
 var Utilities = require('../Utilities.js')
 
 module.exports.Shape = Shape

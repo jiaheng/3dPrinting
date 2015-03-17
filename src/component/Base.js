@@ -1,5 +1,5 @@
 var Component = require('./Component.js').Component
-var ConstrainableValue = require('../constraints/ConstrainableValue.js').ConstrainableValue
+var ConstrainableValue = require('../constraint/ConstrainableValue.js').ConstrainableValue
 var BaseSpecification = require('../interface/BaseSpecification.js').BaseSpecification
 var Circle = require('../geometry/Circle.js').Circle
 var Line = require('../geometry/Line.js').Line
