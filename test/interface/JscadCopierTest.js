@@ -3,7 +3,7 @@ var fs = require('fs')
 var JscadCopier = require('../../src/interface/JscadCopier.js').JscadCopier
 var Config = require('../Config.js')
 
-describe('DrawerComponentCopier', function() {
+describe('JscadCopier', function() {
 	var copier, targetPath
 
 	beforeEach(function() {
@@ -16,7 +16,7 @@ describe('DrawerComponentCopier', function() {
 		describe('the target directory', function() {			
 
 			beforeEach(function() {
-				copier.createTargetDirectory()
+				copier.createDir()
 			})
 			
 			it('should exist', function() {
@@ -40,9 +40,9 @@ describe('DrawerComponentCopier', function() {
 		var sourceDirectories, sourceFiles
 
 		beforeEach(function() {
-			sourceDirectories = Config.sourceDirectories 
-			sourceFiles = findAllJscadFilesIn(sourceDirectories)
-			copier.copyComponentsToTargetDirectory()
+			sourceDirectories = Config.sourceDirectories; 
+			sourceFiles = findAllJscadFilesIn(sourceDirectories);
+			copier.copyToTargetDir();
 		})
 
 		function findAllJscadFilesIn(directories) {
@@ -88,7 +88,7 @@ describe('DrawerComponentCopier', function() {
 							if (source == copied) {
 								var contents = fs.readFileSync(targetPath + '/' + copied)
 								contents = "" + contents // force cast to string
-								contents.test.should.contain("Source: " + sourceDirectory + source)
+								contents.test.should.containEql("Source: " + sourceDirectory + source)
 							}
 						})
 					})					
@@ -100,7 +100,7 @@ describe('DrawerComponentCopier', function() {
 			beforeEach(function() {
 				if (fs.existsSync(targetPath))
 					removeDirectoryAndContents(targetPath)
-				copier.copyComponentsToTargetDirectory()
+				copier.copyToTargetDir()
 			})
 
 			function removeDirectoryAndContents(directory) {
