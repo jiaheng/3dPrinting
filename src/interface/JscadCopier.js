@@ -9,7 +9,7 @@ function JscadCopier(targetDir, sourceDir) {
 	if (sourceDir == undefined)
 		throw new Error('sourceDir is undefined');
 
-	var copyToTargetDir = function() {
+	this.copyToTargetDir = function() {
 		createDir();
 		sourceDir.forEach(function(directory) {
 			copyJscadFrom(directory);
