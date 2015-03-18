@@ -117,7 +117,7 @@ function shouldBehaveLikeComponent(component) {
 
 			it('should set the centre of the Component to have the same coordinates as '
 				 + 'the passed-in Point', function() {
-				component.getCentre().isAtSameLocationAs(point).should.be.true
+				component.getCentre().isAtSameLocationAs(point).should.be.true;
 			})
 			
 			it('should not have exactly the same Point as its centre', function() {

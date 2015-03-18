@@ -32,10 +32,10 @@ var SpecificationTest = require('./SpecificationTest.js')
 
 module.exports.testComponentSpecification = testComponentSpecification
 
-function testComponentSpecification(componentSpec, component) {	
+function testComponentSpecification(componentSpec, component) {
 	var centre = component.getCentre()
 
-	describe('ComponentSpecification',function() {		
+	describe('ComponentSpecification', function() {
 
 		it('should behave like a Specification', function() {
 			SpecificationTest.shouldBehaveLikeSpecification(componentSpec)
@@ -66,9 +66,10 @@ function testComponentSpecification(componentSpec, component) {
 		})
 
 		describe('#id', function() {
-			it('should have the same value as the ID of the Component', function() {
-				componentSpec.id.should.equal(component.getID())
-			})
+			it('should have the same value as the ID of the Component',
+					function() {
+						componentSpec.id.should.equal(component.getID())
+					})
 		})
 	})
 }

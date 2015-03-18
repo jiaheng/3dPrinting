@@ -1,42 +1,15 @@
-/*
- * This file is part of programmatic-3d-printing, a programmatic 3d printer 
- * language, Copyright (c) 2014, Daniel Patterson <dan24patt@gmail.com>.
- * All rights reserved.
- * 
- * programmatic-3d-printing is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * 
- * programmatic-3d-printing is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- */
-
-/*
- * author: Daniel Patterson
- *
- * Tests the DrawerComponentCopier, which should copy the components of the 3D
- * Drawer specified in he config file to a location also specified in the 
- * config file.
- *//*
-var should = require('should')
+var test = require('unit.js')
 var fs = require('fs')
-var DrawerComponentCopier = require('../src/interface/DrawerComponentCopier.js').DrawerComponentCopier
-var Configuration = require('../TestConfiguration.js')
+var JscadCopier = require('../../src/interface/JscadCopier.js').JscadCopier
+var Config = require('../Config.js')
 
 describe('DrawerComponentCopier', function() {
 	var copier, targetPath
 
 	beforeEach(function() {
-		copier = new DrawerComponentCopier(Configuration.targetDirectory,
-			                                 Configuration.sourceDirectories) 
-		targetPath = Configuration.targetDirectory
+		copier = new JscadCopier(Config.targetDirectory,
+			                                 Config.sourceDirectories) 
+		targetPath = Config.targetDirectory
 	})
 	
 	describe('#createTargetDirectory', function() {
@@ -47,7 +20,7 @@ describe('DrawerComponentCopier', function() {
 			})
 			
 			it('should exist', function() {
-				fs.existsSync(targetPath).should.be.true
+				fs.existsSync(targetPath).test.should.be.true;
 			})
 
 			describe('if the target directory was not empty', function() {
@@ -57,7 +30,7 @@ describe('DrawerComponentCopier', function() {
 				})
 				
 				it('should empty the target directory', function() {
-					fs.readdirSync(targetPath).length.should.equal(0)
+					fs.readdirSync(targetPath).length.test.should.equal(0)
 				})
 			})
 		})
@@ -67,7 +40,7 @@ describe('DrawerComponentCopier', function() {
 		var sourceDirectories, sourceFiles
 
 		beforeEach(function() {
-			sourceDirectories = Configuration.sourceDirectories 
+			sourceDirectories = Config.sourceDirectories 
 			sourceFiles = findAllJscadFilesIn(sourceDirectories)
 			copier.copyComponentsToTargetDirectory()
 		})
@@ -86,7 +59,7 @@ describe('DrawerComponentCopier', function() {
 		it('should copy all the files in the source directories into the target '
 			 + 'directory', function() {
 			sourceFiles.forEach(function(file) {
-				fs.existsSync(targetPath + '/' + file).should.be.true
+				fs.existsSync(targetPath + '/' + file).test.should.be.true;
 			})
 		})	
 
@@ -103,7 +76,7 @@ describe('DrawerComponentCopier', function() {
 				copiedFiles.forEach(function(file) {
 					var contents = fs.readFileSync(targetPath + '/' + file)
 					contents = "" + contents // force cast to string
-					contents.should.contain(header)
+					contents.test.should.contain(header)
 				})
 			})
 
@@ -115,7 +88,7 @@ describe('DrawerComponentCopier', function() {
 							if (source == copied) {
 								var contents = fs.readFileSync(targetPath + '/' + copied)
 								contents = "" + contents // force cast to string
-								contents.should.contain("Source: " + sourceDirectory + source)
+								contents.test.should.contain("Source: " + sourceDirectory + source)
 							}
 						})
 					})					
@@ -137,8 +110,8 @@ describe('DrawerComponentCopier', function() {
 			}
 
 			it('should ensure the target directory exists', function() {
-				fs.existsSync(targetPath).should.be.true
+				fs.existsSync(targetPath).test.should.be.true
 			})		
 		})
 	})
-})*/
+})
