@@ -49,6 +49,10 @@ function Circle() {
 		return radius.getValue()
 	}
 
+	circle.radiusIsNotSet = function() {
+		return radius.isNotSet();
+	}
+	
 	circle.getDiameter = function() {
 		return diameter.getValue()
 	}

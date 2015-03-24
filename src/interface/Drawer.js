@@ -23,4 +23,16 @@ function Drawer(configuration) {
 		specWriter.generateSpec(components);
 		mainWriter.generateFile(components);
 	}
+	
+	this.addComponentGroup = function(group) {
+		group.checkCanBeDrawn();
+		this.addAllComponents(group.getComponents());
+		this.addAllComponents(group.getAuxillaryComponents());
+	}
+	
+	this.addAllComponents = function(componentArray) {
+		for (var i = 0; i < componentArray.length; i++) {
+			this.addComponent(componentArray[i]);
+		}
+	}
 }

@@ -19,13 +19,13 @@ function SpecificationWriter(specFilePath) {
 		return specifications;
 	}
 
-	var addAllComponents = function(componentArray) {
+	this.addAllComponents = function(componentArray) {
 		for (var i = 0; i < componentArray.length; i++) {
 			specifications.push(componentArray[i].toSpecification());
 		}
 	}
 
-	var writeSpecificationToFile = function() {	
+	this.writeSpecificationToFile = function() {	
 		var string = LIBRARY_HEADER + COMPONENT_PREFIX;
 		string += JSON.stringify(specifications, null, 2);
 		string += COMPONENT_SUFFIX;
@@ -33,7 +33,7 @@ function SpecificationWriter(specFilePath) {
 	}
   
   this.generateSpec = function(componentArray) {
-    addAllComponents(componentArray);
-    writeSpecificationToFile();
+    this.addAllComponents(componentArray);
+    this.writeSpecificationToFile();
   }
 }

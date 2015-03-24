@@ -1,6 +1,6 @@
-var Drawer = require('../src/interface/Drawer.js').Drawer;
-var Spring = require('../src/component/Spring.js').Spring;
-var Anchor = require('../src/component/Anchor.js').Anchor;
+var Drawer = require(__dirname + '/../src/interface/Drawer.js').Drawer;
+var Spring = require(__dirname + '/../src/component/Spring.js').Spring;
+var Anchor = require(__dirname + '/../src/component/Anchor.js').Anchor;
 
 var drawer = new Drawer();
 var spring = new Spring();
