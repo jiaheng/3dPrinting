@@ -4,7 +4,8 @@ module.exports.SpringSpecification = SpringSpecification
 
 function SpringSpecification(spring) {
 	var spec = new ComponentSpecification(spring);
-	spec.thickness = spring.getThickness();
+	spec.springThickness = spring.getSpringThickness();
+	spec.springWidth = spring.getSpringWidth();
 	spec.turn = spring.getTurn();
 	spec.maxRadius = spring.getMaxRadius();
 	spec.startRadius = spring.getStartRadius();

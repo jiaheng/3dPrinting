@@ -10,7 +10,15 @@ Spring.colour = [ 0.9, 0.4, 0.4 ]
 
 Spring.make = function(specification, params) {
 	var spring;
-	var spiral = Spiral.make(specification, params);
+	
+	// make spiral spring
+	var spiralSpec = {};
+	spiralSpec.thickness = specification.springThickness;
+	spiralSpec.width = specification.springWidth;
+	spiralSpec.turn = specification.turn;
+	spiralSpec.startRadius = specification.startRadius;
+	spiralSpec.maxRadius = specification.maxRadius;
+	var spiral = Spiral.make(spiralSpec, params);
 
 	var cylinderSpec = {};
 	var cylinder;
@@ -22,7 +30,7 @@ Spring.make = function(specification, params) {
 	cylinderSpec.radius = specification.outerCylinderRadius;
 	cylinder = Circle.make(cylinderSpec, params);
 	cylinder = cylinder.translate([ 0, 0,
-			(cylinderSpec.height - specification.thickness) / 2 ]);
+			(cylinderSpec.height - specification.springThickness) / 2 ]);
 	spring = spiral.union(cylinder);
 
 	// make inner cylider
@@ -30,7 +38,7 @@ Spring.make = function(specification, params) {
 	cylinderSpec.radius = specification.innerCylinderRadius;
 	cylinder = Circle.make(cylinderSpec, params);
 	cylinder = cylinder.translate([ 0, 0,
-			(cylinderSpec.height - specification.thickness) / 2 ]);
+			(cylinderSpec.height - specification.springThickness) / 2 ]);
 	spring = spring.union(cylinder);
 
 	// make rounded cube for connecting anchor
@@ -53,7 +61,7 @@ Spring.make = function(specification, params) {
 							0,
 							-cubeSpec.length / 2,
 							specification.height
-									- (specification.roundedCubeHeight + specification.thickness)
+									- (specification.roundedCubeHeight + specification.springThickness)
 									/ 2 ]);
 	spring = spring.union(connect);
 	/*
@@ -62,13 +70,13 @@ Spring.make = function(specification, params) {
 	 * specification.roundedCubeHeight; cube = Rectangle.make(cubeSpec, params);
 	 * cube = cube.rotateZ(90); cube = cube.translate([0,
 	 * -specification.roundedCubeLength/2, specification.height -
-	 * (specification.roundedCubeHeight+specification.thickness)/2]);
+	 * (specification.roundedCubeHeight+specification.springThickness)/2]);
 	 * 
 	 * spring = spring.union(cube); // rounded cube on one side of the rectangle
 	 * cylinder = CSG.cylinder({ start: [0, -specification.roundedCubeLength,
-	 * specification.innerCylinderHeight - specification.thickness/2], end: [0,
+	 * specification.innerCylinderHeight - specification.springThickness/2], end: [0,
 	 * -specification.roundedCubeLength, specification.innerCylinderHeight -
-	 * specification.thickness/2 - specification.roundedCubeHeight], radius:
+	 * specification.springThickness/2 - specification.roundedCubeHeight], radius:
 	 * specification.roundedCubeWidth/2, resolution: params.circleRes }); spring =
 	 * spring.union(cylinder);
 	 */

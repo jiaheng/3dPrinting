@@ -3,6 +3,7 @@ var AnchorSpecification = require('../interface/AnchorSpecification.js').AnchorS
 var Point = require('../geometry/Point.js').Point;
 var Rectangle = require('../geometry/Rectangle.js').Rectangle;
 var Spindle = require('./Spindle.js').Spindle;
+var ConstrainableValue = require('../constraint/ConstrainableValue.js').ConstrainableValue;
 
 module.exports.Anchor = Anchor
 
@@ -10,32 +11,68 @@ function Anchor() {
 	var anchor = new Component();
 
 	const DEFAULT_THICKNESS = 10;
-	const DEFAULT_MAX_RADIUS = 50;
+	const DEFAULT_ANCHOR_LENGTH = 45;
+	const DEFAULT_FORK_LENGTH = 50;
 	const DEFAULT_CONNECT_WIDTH = 4;
-	const DEFAULT_CONNECT_LENGTH = 4;
+	const DEFAULT_CONNECT_LENGTH = 3;
 	const DEFAULT_CENTRE_HOLE_RADIUS = 3;
 	const DEFAULT_CENTRE_RING_RADIUS = 12;
 	const DEFAULT_HEIGHT = 10;
-	const DEFAULT_HAND_WIDTH = 4; // CHANGE THE NAME
+	const DEFAULT_ANCHOR_WIDTH = 4; 
 	const DEFAULT_CONNECTOR_LENGTH = 9;
 	const DEFAULT_CONNECTOR_WIDTH = 8;
 
-	var thickness = DEFAULT_THICKNESS;
-	var maxRadius = DEFAULT_MAX_RADIUS;
+	//var thickness = DEFAULT_THICKNESS; // change to constrainable value
+	var anchorLength = DEFAULT_ANCHOR_LENGTH;
+	var forkLength = DEFAULT_FORK_LENGTH;
 	var connectWidth = DEFAULT_CONNECT_WIDTH;
 	var connectLength = DEFAULT_CONNECT_LENGTH;
 	var centreHoleRadius = DEFAULT_CENTRE_HOLE_RADIUS;
 	var centreRingRadius = DEFAULT_CENTRE_RING_RADIUS;
-	var height = DEFAULT_HEIGHT;
-	var handWidth = DEFAULT_HAND_WIDTH; // CHANGE THE NAME
+	//var height = DEFAULT_HEIGHT; // change to constrainable value
+	var anchorWidth = DEFAULT_ANCHOR_WIDTH; // CHANGE THE NAME
 	var connectorLength = DEFAULT_CONNECTOR_LENGTH;
 	var connectorWidth = DEFAULT_CONNECTOR_WIDTH;
 
-	DEFAULT_MAX_RADIUS = 55;
-
+	var thickness = new ConstrainableValue();
+	var height = new ConstrainableValue();
+	height.sameAs(thickness);
+	thickness.setValue(DEFAULT_THICKNESS);
+	
 	anchor.setCentre(0, 0, 0);
 
+	var checkParameter = function() {
+		if (anchor.getThickness() <=0 )
+			throw new Error('Thickness must be more than zero');
+		if (anchor.getAnchorLength() <= 0)
+			throw new Error('Anchor length must be more than zero');
+		if (anchor.getForkLength() <= 0)
+			throw new Error('Fork length must be more than zero');
+		if (anchor.getConnectWidth() <= 0)
+			throw new Error('Connect width must be more than zero');
+		if (anchor.getConnectLength() <= 0)
+			throw new Error('Connect length must be more than zero');
+		if (anchor.getCentreHoleRadius() <= 0)
+			throw new Error('Centre hole radius must be more than zero');
+		if (anchor.getCentreRingRadius() <=0 )
+			throw new Error('Centre ring radius must be more than zero');
+		if (anchor.getAnchorWidth() <= 0)
+			throw new Error('Anchor width must be more than zero');
+		if (anchor.getConnectorLength() <= 0)
+			throw new Error('Connector length must be more than zero');
+		if (anchor.getConnectorWidth() <= 0)
+			throw new Error('Connector width must be more than zero');
+		
+		if (anchor.getCentreHoleRadius() >= anchor.getCentreRingRadius())
+			throw new Error('Centre hole should be smaller than centre ring radius');
+		if (anchor.getCentreRingRadius() >= anchor.getForkLength())
+			throw new Error('Fork length should be larger than centre ring radius');
+		if (anchor.getCentreRingRadius() >= anchor.getAnchorLength())
+			throw new Error('Anchor length should be larger than centre ring radius');
+	}
+	
 	anchor.toSpecification = function() {
+		checkParameter();
 		return new AnchorSpecification(anchor);
 	}
 
@@ -44,13 +81,17 @@ function Anchor() {
 	}
 
 	anchor.getThickness = function() {
-		return thickness;
+		return thickness.getValue();
 	}
 
-	anchor.getMaxRadius = function() {
-		return maxRadius;
+	anchor.getAnchorLength = function() {
+		return anchorLength;
 	}
-
+	
+	anchor.getForkLength = function() {
+		return forkLength;
+	}
+	
 	anchor.getConnectWidth = function() {
 		return connectWidth;
 	}
@@ -68,11 +109,11 @@ function Anchor() {
 	}
 
 	anchor.getHeight = function() {
-		return height;
+		return height.getValue();
 	}
 
-	anchor.getHandWidth = function() {
-		return handWidth;
+	anchor.getAnchorWidth = function() {
+		return anchorWidth;
 	}
 
 	anchor.getConnectorLength = function() {
@@ -84,8 +125,10 @@ function Anchor() {
 	}
 
 	anchor.getBaseCoor = function() {
+		var thickness = anchor.getThickness();
 		var centre = anchor.getCentre();
 		var point = new Point();
+		
 		var x = centre.getX().getValue();
 		var y = centre.getY().getValue();
 		var z = centre.getZ().getValue() - thickness / 2;
@@ -94,27 +137,36 @@ function Anchor() {
 	}
 
 	anchor.getWidth = function() {
-		return maxRadius * 2;
+		var width;
+		width = anchor.getAnchorLength();
+		return width;
 	}
 
 	anchor.getLength = function() {
-		return maxRadius * 2;
+		var length;
+		length = anchor.getAnchorLength();
+		length += anchor.getForkLength();
+		return length;
 	}
 
 	anchor.setThickness = function(newThickness) {
-		thickness = newThickness;
+		thickness.setValue(newThickness);
 	}
 
-	anchor.setMaxRadius = function(newMaxRadius) {
-		maxRadius = newMaxRadius;
+	anchor.setAnchorLength = function(newLength) {
+		anchorLength = newLength;
 	}
 
-	anchor.setConnectSize = function(w) {
+	anchor.setForkLength = function(newLength) {
+		forkLength = newLength;
+	}
+	
+	anchor.setConnectWidth = function(w) {
 		connectWidth = w;
 	}
 
 	anchor.setConnectLength = function(l) {
-		connecLength = l;
+		connectLength = l;
 	}
 
 	anchor.setCentreHoleRadius = function(newCentreHoleRadius) {
@@ -124,13 +176,17 @@ function Anchor() {
 	anchor.setCentreRingRadius = function(newCentreRingRadius) {
 		centreRingRadius = newCentreRingRadius;
 	}
-
+	
+	/*
+	 * cannot set height
+	 *
 	anchor.setHeight = function(newHeight) {
 		height = newHeight;
 	}
+	*/
 
-	anchor.setHandWidth = function(newHandWidth) {
-		handWidth = newHandWidth;
+	anchor.setAnchorWidth = function(newAnchorWidth) {
+		anchorWidth = newAnchorWidth;
 	}
 
 	anchor.setConnectorLength = function(l) {
@@ -144,8 +200,12 @@ function Anchor() {
 	anchor.getConnectPoint = function() {
 		var point = new Point();
 		var centre = anchor.getCentre();
+		var forkLength = anchor.getForkLength();
+		var connectorLength = anchor.getConnectorLength();
+		var height = anchor.getHeight();
+		
 		var x = centre.getX().getValue();
-		var y = centre.getY().getValue() + maxRadius + connectorLength;
+		var y = centre.getY().getValue() + forkLength + connectorLength;
 		var z = centre.getZ().getValue() + height / 2;
 		point.setAt(x, y, z);
 		return point;
@@ -164,6 +224,9 @@ function Anchor() {
 	}
 
 	anchor.getSpindle = function() {
+		var height = anchor.getHeight();
+		var centreHoleRadius = anchor.getCentreHoleRadius();
+		
 		var spindle = new Spindle(height, centreHoleRadius);
 		var centre = anchor.getCentre();
 		var x = centre.getX().getValue();

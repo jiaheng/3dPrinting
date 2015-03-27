@@ -5,7 +5,8 @@ module.exports.AnchorSpecification = AnchorSpecification
 function AnchorSpecification(anchor) {
 	var spec = new ComponentSpecification(anchor);
 	spec.thickness = anchor.getThickness();
-	spec.maxRadius = anchor.getMaxRadius();
+	spec.forkLength = anchor.getForkLength();
+	spec.anchorLength = anchor.getAnchorLength();
 	spec.connectWidth = anchor.getConnectWidth();
 	spec.connectLength = anchor.getConnectLength();
 	spec.connectorLength = anchor.getConnectorLength();
@@ -13,6 +14,6 @@ function AnchorSpecification(anchor) {
 	spec.centreHoleRadius = anchor.getCentreHoleRadius();
 	spec.centreRingRadius = anchor.getCentreRingRadius();
 	spec.height = anchor.getHeight();
-	spec.handWidth = anchor.getHandWidth();
+	spec.anchorWidth = anchor.getAnchorWidth();
 	return spec;
 }

@@ -23,8 +23,8 @@ Anchor.make = function(specification, params) {
 
 	// fork
 	var fork;
-	cubeSpec.length = specification.maxRadius;
-	cubeSpec.width = specification.handWidth;
+	cubeSpec.length = specification.forkLength;
+	cubeSpec.width = specification.anchorWidth;
 	cubeSpec.height = specification.thickness;
 	fork = Rectangle.make(cubeSpec, params);
 	// make connector
@@ -35,7 +35,7 @@ Anchor.make = function(specification, params) {
 	cubeSpec.length = connectorLength;
 	connector = Rectangle.make(cubeSpec, params);
 	connector = connector.translate([
-			(specification.maxRadius + connectorLength) / 2, 0, 0 ]);
+			(specification.forkLength + connectorLength) / 2, 0, 0 ]);
 	// make hole in the connector
 	var hole;
 	var holeLength = specification.connectLength; // constant length
@@ -48,7 +48,7 @@ Anchor.make = function(specification, params) {
 	cylinder = Circle.make(cylinderSpec, params);
 	cylinder = cylinder.translate([ -holeLength / 2, 0, 0 ]);
 	hole = cube.union(cylinder);
-	// outer hole is wider
+	
 	/*
 	 * var points = [ [cubeSpec.length/2, cubeSpec.width/2, cubeSpec.height/2],
 	 * [cubeSpec.length/2, cubeSpec.width/2, -cubeSpec.height/2],
@@ -71,6 +71,7 @@ Anchor.make = function(specification, params) {
 	 * -cubeSpec.height/2)) ]) ); // add more polygons and finally: var solid =
 	 * CSG.fromPolygons(polygons);
 	 */
+	// outer hole is wider
 	var solid = polyhedron({
 		points : [
 				[ cubeSpec.length / 2, cubeSpec.width / 2, cubeSpec.height / 2 ], // 0
@@ -110,28 +111,28 @@ Anchor.make = function(specification, params) {
 	// solid = solid.translate([0,-1,0]);
 	hole = hole.union(solid);
 	hole = hole.translate([
-			specification.maxRadius / 2 + connectorLength - holeLength / 2, 0,
+			specification.forkLength / 2 + connectorLength - holeLength / 2, 0,
 			0 ]);
 	connector = connector.subtract(hole);
 	fork = fork.union(connector);
 
-	fork = fork.rotateZ(90).translate([ 0, specification.maxRadius / 2, 0 ]);
+	fork = fork.rotateZ(90).translate([ 0, specification.forkLength / 2, 0 ]);
 	anchor = anchor.union(fork);
 
-	// left pallet
+	// left side anchor
 	var deg = 180 - 120; // the angle between pallets is 120 degree
-	cubeSpec.length = specification.maxRadius;
-	cubeSpec.width = specification.handWidth;
+	cubeSpec.length = specification.anchorLength;
+	cubeSpec.width = specification.anchorWidth;
 	cubeSpec.height = specification.thickness;
-	shiftX = -specification.maxRadius / 2 * Math.cos(Math.PI * deg / 360);
-	shiftY = -specification.maxRadius / 2 * Math.sin(Math.PI * deg / 360);
+	shiftX = -specification.anchorLength / 2 * Math.cos(Math.PI * deg / 360);
+	shiftY = -specification.anchorLength / 2 * Math.sin(Math.PI * deg / 360);
 	cube = Rectangle.make(cubeSpec, params);
 	cube = cube.rotateZ(deg / 2).translate([ shiftX, shiftY, 0 ]);
 	anchor = anchor.union(cube);
 
-	// right pallet the angle between pallet is 90 degree
-	shiftX = specification.maxRadius / 2 * Math.cos(Math.PI * deg / 360);
-	shiftY = -specification.maxRadius / 2 * Math.sin(Math.PI * deg / 360);
+	// right side anchor, the angle between left and right anchor is 90 degree
+	shiftX = specification.anchorLength / 2 * Math.cos(Math.PI * deg / 360);
+	shiftY = -specification.anchorLength / 2 * Math.sin(Math.PI * deg / 360);
 	cube = Rectangle.make(cubeSpec, params);
 	cube = cube.rotateZ(-deg / 2).translate([ shiftX, shiftY, 0 ]);
 	anchor = anchor.union(cube);

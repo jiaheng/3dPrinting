@@ -43,10 +43,18 @@ function Spindle(h, r) {
 		radius = r;
 	}
 
-	spindle.toSpecification = function() {
-		return new SpindleSpecification(spindle)
+	var checkParameter = function() {
+		if(spindle.getHeight() <= 0)
+			throw new Error('Height must be more than zero');
+		if(spindle.getRadius() <= 0)
+			throw new Error('Radius must be more than zero');
 	}
 	
+	spindle.toSpecification = function() {
+		checkParameter();
+		return new SpindleSpecification(spindle)
+	}
+
 	spindle.setHeight(h);
 	spindle.setRadius(r);
 	
