@@ -33,6 +33,7 @@
  * an update of w. 
  *
  * This is the base class for all Constraints
+ * 
  */
 module.exports.Constraint = Constraint
 module.exports.SameAsConstraint = SameAsConstraint

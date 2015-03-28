@@ -22,6 +22,10 @@
  * author: Daniel Patterson
  *
  * A rectangle with constrainable parameters which cannot be rotated. 
+ * 
+ * edited by Jia Heng Eik
+ * fix some bug
+ * modify some method for better usage
  */
 var Point = require('../geometry/Point.js').Point
 var Shape = require('../geometry/Shape.js').Shape

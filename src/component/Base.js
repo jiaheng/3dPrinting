@@ -16,13 +16,7 @@ function Base() {
 	base.getParts = function() {
 		return parts
 	}
-	/*
-	 * base.getCircles = function() { return parts.filter(function(element) {
-	 * return element.getType != undefined && element.getType() == 'Circle' }) }
-	 * 
-	 * base.getLines = function() { return parts.filter(function(element) {
-	 * return element instanceof Line }) }
-	 */
+	
 	base.addPart = function(part) {
 		parts.push(part)
 	}

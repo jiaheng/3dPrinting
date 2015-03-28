@@ -22,6 +22,9 @@
  * author: Daniel Patterson
  *
  * A shape with constrainable properties.
+ * 
+ * edited by Jia Heng Eik
+ * modify setCentre method to allow polymorphism, multiple argument for different usage
  */
 var util = require('util')
 var Point = require('../geometry/Point.js').Point

@@ -23,6 +23,9 @@
  *
  * The Object that is used to interface between the Constraint Modelling aspect
  * and the 3D Drawing aspect for Rectangles
+ * 
+ * edited by Jia Heng
+ * fix some method so the class can be used perfectly
  */
 var Specification = require('../interface/Specification.js').Specification
 

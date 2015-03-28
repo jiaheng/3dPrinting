@@ -22,6 +22,10 @@
  * author: Daniel Patterson
  *
  * A circle with constrainable properties.
+ * 
+ * edited by Jia Heng 
+ * fix some bug
+ * modify some method for better usage
  */
 var Point = require('../geometry/Point.js').Point
 var Shape = require('../geometry/Shape.js').Shape
