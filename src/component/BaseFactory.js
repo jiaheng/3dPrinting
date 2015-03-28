@@ -23,6 +23,18 @@ function BaseFactory() {
 		return base;
 	}
 
+	this.getThickness = function() {
+		return this.thickness;
+	}
+	
+	this.setThickness = function(newThickness) {
+		if (typeof newThickness !== 'number' || isNaN(newThickness))
+			throw new Error('Thickness must be a number');
+		if (newThickness <= 0) 
+			throw new Error('Thickness must be more than zero');
+		this.thickness = newThickness;
+	}
+	
 	var createBase = function() {
 		base = new Base();
 		base.setHeight(thickness);
@@ -89,59 +101,5 @@ function BaseFactory() {
 				base.addPart(support);
 			}
 		}
-	}
-
-	// Unused
-	var addSupportingCirclesToBase = function() {
-		for (var i = components.length - 1; i >= 0; i--) {
-			if (components[i].getTypeName() == "Gear") {
-				var baseCentreZ = calculateBaseCentreZ(components[i]);
-				var circle = new Circle();
-				circle.setRadius(components[i].getCentreHoleRadius().getValue()
-						+ GEAR_LIP);
-				var point = new Point();
-				point.setAt(components[i].getCentre().getX().getValue(),
-						components[i].getCentre().getY().getValue(),
-						baseCentreZ);
-				circle.setCentre(point);
-				base.addPart(circle);
-			}
-		}
-		;
-	}
-
-	var calculateBaseCentreZ = function(component) {
-		var componentCentreZ = component.getCentre().getZ().getValue();
-		var componentHeight = component.getHeight().getValue();
-		var baseHeight = base.getHeight().getValue();
-		return componentCentreZ - (componentHeight / 2) - (baseHeight / 2);
-	}
-
-	var addSupportingLinesToBase = function() {
-		for (var i = 0; i < components.length; i++) {
-			for (var j = 0; j < components.length && j != i; j++) {
-				if (components[i].isAdjacentTo(components[j]))
-					addSupportingLineBetween(components[i], components[j]);
-			}
-		}
-	}
-
-	var addSupportingLineBetween = function(startComponent, endComponent) {
-		var baseCentreZ = calculateBaseCentreZ(startComponent);
-		var startPoint = makePointBelow(startComponent, baseCentreZ);
-		var endPoint = makePointBelow(endComponent, baseCentreZ);
-		var line = new Line(startPoint, endPoint);
-		line.setWidth(GEAR_LIP * 2);
-		base.addPart(line);
-	}
-
-	var makePointBelow = function(component, baseCentreZ) {
-		var point = new Point();
-		var componentCentre = component.getCentre();
-		var x = componentCentre.getX().getValue();
-		var y = componentCentre.getY().getValue();
-		var z = baseCentreZ;
-		point.setAt(x, y, z);
-		return point;
 	}
 }
