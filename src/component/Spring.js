@@ -38,6 +38,7 @@ function Spring() {
 	var roundedCubeLength = DEFAULT_ROUNDED_CUBE_LENGTH;
 	var roundedCubeWidth = DEFAULT_ROUNDED_CUBE_WIDTH;
 	//var height = DEFAULT_HEIGHT; // change to contrainable value
+	var connectedAnchor = null;
 	
 	var innerCylinderHeight = new ConstrainableValue();
 	var height = new ConstrainableValue();
@@ -185,22 +186,41 @@ function Spring() {
 	*/
 	
 	spring.placeWith = function(otherComponent) {
+		if (spring.isPlaceWithAnchor())
+			throw new Error('Spring already connected with another anchor');
 		if (otherComponent.getTypeName() != 'Anchor')
 			throw new Error("Spring can only place with an anchor");
+		/*
 		var connectP = spring.getConnectPoint();
 		var otherConnectP = otherComponent.getConnectPoint();
 		var newX = otherConnectP.getX().getValue() - connectP.getX().getValue();
 		var newY = otherConnectP.getY().getValue() - connectP.getY().getValue();
 		var newZ = otherConnectP.getZ().getValue() - connectP.getZ().getValue();
+		*/
 		/*
 		 * console.log(otherConnectP.getX().getValue());
 		 * console.log(otherConnectP.getY().getValue());
 		 * console.log(otherConnectP.getZ().getValue()); console.log('new x: ' +
 		 * newX + '\tnew y: ' + newY + '\tnew z: ' + newZ);
 		 */
-		spring.setCentre(newX, newY, newZ);
+		//spring.setCentre(newX, newY, newZ);
+
+		spring.connectedAnchor = otherComponent;
+		spring.relocate();
+		otherComponent.link(spring);
 	}
 
+	spring.link = function(otherComponent) {
+		if (otherComponent.getConnectedSpring() === spring)
+			spring.connectedAnchor = otherComponent;
+		else
+			throw new Error('Component not the same');
+	}
+	
+	spring.getConnectedAnchor = function() {
+		return spring.connectedAnchor;
+	}
+	
 	spring.getConnectPoint = function() {
 		var height = this.getHeight();
 		var innerCylinderRadius = this.getInnerCylinderRadius();
@@ -278,6 +298,40 @@ function Spring() {
 	spring.toSpecification = function() {
 		checkParameter();
 		return new SpringSpecification(spring);
+	}
+	
+	spring.addSupport = function(floorZ) {
+		//TODO:
+		return spring.getSpindle();
+	}
+	
+	spring.isPlaceWithAnchor = function() {
+		return (spring.connectedAnchor != null);
+	}
+	
+	spring.unlink = function() {
+		var anchor = spring.connectedAnchor;
+		spring.connectedAnchor = null;
+		if (anchor.isPlaceWithSpring())
+			anchor.unlink();
+	}
+	
+	spring._setCentre = spring.setCentre;
+	
+	spring.setCentre = function(arg1, arg2, arg3) {
+		spring._setCentre(arg1, arg2, arg3);
+		if (spring.isPlaceWithAnchor())
+			spring.connectedAnchor.relocate();
+	}
+	
+	spring.relocate = function() {
+		var connectP = spring.getConnectPoint();
+		var anchorConnectP = spring.connectedAnchor.getConnectPoint();
+		var centre = spring.getCentre();
+		var newX = centre.getX().getValue() + anchorConnectP.getX().getValue() - connectP.getX().getValue();
+		var newY = centre.getY().getValue() + anchorConnectP.getY().getValue() - connectP.getY().getValue();
+		var newZ = centre.getZ().getValue() + anchorConnectP.getZ().getValue() - connectP.getZ().getValue();
+		spring._setCentre(newX, newY, newZ); // call super method setCentre only
 	}
 	
 	return spring;

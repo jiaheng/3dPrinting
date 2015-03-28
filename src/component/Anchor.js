@@ -33,7 +33,8 @@ function Anchor() {
 	var anchorWidth = DEFAULT_ANCHOR_WIDTH; // CHANGE THE NAME
 	var connectorLength = DEFAULT_CONNECTOR_LENGTH;
 	var connectorWidth = DEFAULT_CONNECTOR_WIDTH;
-
+	var connectedSpring = null;
+	
 	var thickness = new ConstrainableValue();
 	var height = new ConstrainableValue();
 	height.sameAs(thickness);
@@ -212,8 +213,11 @@ function Anchor() {
 	}
 
 	anchor.placeWith = function(otherComponent) {
+		if (anchor.isPlaceWithSpring())
+			throw new Error('Anchor already connected with another spring');
 		if (otherComponent.getTypeName() != 'Spring')
 			throw new Error("Anchor can only place with a spring");
+		/*
 		var centre = anchor.getCentre();
 		var connectP = anchor.getConnectPoint();
 		var otherConnectP = otherComponent.getConnectPoint();
@@ -221,8 +225,23 @@ function Anchor() {
 		var newY = otherConnectP.getY().getValue() - connectP.getY().getValue();
 		var newZ = otherConnectP.getZ().getValue() - connectP.getZ().getValue();
 		anchor.setCentre(newX, newY, newZ);
+		*/
+		anchor.connectedSpring = otherComponent;
+		anchor.relocate();
+		otherComponent.link(anchor);
 	}
 
+	anchor.link = function(otherComponent) {
+		if (otherComponent.getConnectedAnchor() === anchor)
+			anchor.connectedSpring = otherComponent;
+		else
+			throw new Error('Component not the same');
+	}
+	
+	anchor.getConnectedSpring = function() {
+		return anchor.connectedSpring;
+	}
+	
 	anchor.getSpindle = function() {
 		var height = anchor.getHeight();
 		var centreHoleRadius = anchor.getCentreHoleRadius();
@@ -259,5 +278,34 @@ function Anchor() {
 		return rectangle;
 	}
 
+	anchor.isPlaceWithSpring = function() {
+		return (anchor.connectedSpring != null);
+	}
+	
+	anchor.unlink = function() {
+		var spring = anchor.connectedSpring;
+		anchor.connectedSpring = null;
+		if (spring.isPlaceWithAnchor())
+			spring.unlink();
+	}
+	
+	anchor._setCentre = anchor.setCentre;
+	
+	anchor.setCentre = function(arg1, arg2, arg3) {
+		anchor._setCentre(arg1, arg2, arg3);
+		if (anchor.isPlaceWithSpring())
+			anchor.connectedSpring.relocate();
+	}
+	
+	anchor.relocate = function() {
+		var connectP = anchor.getConnectPoint();
+		var springConnectP = anchor.connectedSpring.getConnectPoint();
+		var centre = anchor.getCentre();
+		var newX = centre.getX().getValue() + springConnectP.getX().getValue() - connectP.getX().getValue();
+		var newY = centre.getY().getValue() + springConnectP.getY().getValue() - connectP.getY().getValue();
+		var newZ = centre.getZ().getValue() + springConnectP.getZ().getValue() - connectP.getZ().getValue();
+		anchor._setCentre(newX, newY, newZ); // call super method setCentre only
+	}
+	
 	return anchor;
 }
