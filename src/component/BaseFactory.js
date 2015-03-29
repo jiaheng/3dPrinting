@@ -7,8 +7,7 @@ var Rectangle = require('../geometry/Rectangle.js').Rectangle;
 module.exports.BaseFactory = BaseFactory
 
 function BaseFactory() {
-	const
-	DEFAULT_THICKNESS = 2;
+	const DEFAULT_THICKNESS = 2;
 
 	var base, components;
 	var thickness = DEFAULT_THICKNESS;
@@ -41,8 +40,8 @@ function BaseFactory() {
 	}
 
 	var addBaseFloor = function() {
-		var baseMinX = 0, baseMinY = 0, baseMinZ = 0;
-		var baseMaxX = 0, baseMaxY = 0;
+		var baseMinX = null, baseMinY = null, baseMinZ = null;
+		var baseMaxX = null, baseMaxY = null;
 		for (var i = 0; i < components.length; i++) {
 			var basePoint = components[i].getBaseCoor();
 			var length = components[i].getLength();
@@ -54,15 +53,15 @@ function BaseFactory() {
 			var compMaxY = basePoint.getY().getValue() + width / 2;
 			var compMinZ = basePoint.getZ().getValue();
 
-			if (baseMinX > compMinX)
+			if (baseMinX == null || baseMinX > compMinX)
 				baseMinX = compMinX;
-			if (baseMaxX < compMaxX)
+			if (baseMaxX == null || baseMaxX < compMaxX)
 				baseMaxX = compMaxX;
-			if (baseMinY > compMinY)
+			if (baseMinY == null || baseMinY > compMinY)
 				baseMinY = compMinY;
-			if (baseMaxY < compMaxY)
+			if (baseMaxY == null || baseMaxY < compMaxY)
 				baseMaxY = compMaxY;
-			if (baseMinZ > compMinZ) {
+			if (baseMinZ == null || baseMinZ > compMinZ) {
 				baseMinZ = compMinZ;
 				floorZ = compMinZ;
 			}
@@ -95,6 +94,9 @@ function BaseFactory() {
 		for (var i = 0; i < components.length; i++) {
 			var basePoint = components[i].getBaseCoor();
 			var compZ = basePoint.getZ().getValue();
+			
+			//console.log('component altitute ' + compZ + ' and floor altitute ' + floorZ)
+			
 			// if the component position is higher than the base floor
 			if (compZ > floorZ) {
 				var support = components[i].addSupport(floorZ);

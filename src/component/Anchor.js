@@ -259,6 +259,7 @@ function Anchor() {
 		return [ anchor.getSpindle() ];
 	}
 
+	// TODO: change to cylinder
 	anchor.addSupport = function(floorZ) {
 		var baseCoor = anchor.getBaseCoor();
 		var bottomZ = baseCoor.getZ().getValue();

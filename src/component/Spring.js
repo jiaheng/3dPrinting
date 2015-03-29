@@ -3,6 +3,7 @@ var SpringSpecification = require('../interface/SpringSpecification.js').SpringS
 var Point = require('../geometry/Point.js').Point;
 var Spindle = require('./Spindle.js').Spindle;
 var ConstrainableValue = require('../constraint/ConstrainableValue.js').ConstrainableValue;
+var Rectangle = require('../geometry/Rectangle.js').Rectangle;
 
 module.exports.Spring = Spring
 
@@ -300,9 +301,24 @@ function Spring() {
 		return new SpringSpecification(spring);
 	}
 	
+	// TODO: change to cylinder
 	spring.addSupport = function(floorZ) {
-		//TODO:
-		return spring.getSpindle();
+		var baseCoor = spring.getBaseCoor();
+		var bottomZ = baseCoor.getZ().getValue();
+		
+		var x = baseCoor.getX().getValue();
+		var y = baseCoor.getY().getValue();
+		var z = (bottomZ+floorZ) / 2;
+		var length = spring.getOuterCylinderRadius()*2;
+		var width = length;
+		var height = (bottomZ - floorZ);
+		
+		var rectangle = new Rectangle();
+		rectangle.setLength(length);
+		rectangle.setWidth(width);
+		rectangle.setHeight(height);
+		rectangle.setCentre(x, y, z);
+		return rectangle;
 	}
 	
 	spring.isPlaceWithAnchor = function() {
