@@ -6,6 +6,7 @@ function AnchorSpecification(anchor) {
 	var spec = new ComponentSpecification(anchor);
 	spec.thickness = anchor.getThickness();
 	spec.forkLength = anchor.getForkLength();
+	spec.forkWidth = anchor.getForkWidth();
 	spec.anchorLength = anchor.getAnchorLength();
 	spec.connectWidth = anchor.getConnectWidth();
 	spec.connectLength = anchor.getConnectLength();

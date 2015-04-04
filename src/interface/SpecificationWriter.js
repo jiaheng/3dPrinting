@@ -2,7 +2,7 @@ var fs = require('fs');
 
 module.exports.SpecificationWriter = SpecificationWriter
 
-// A header to allow OpenJSCAD to use the generated file as a library
+//A header to allow OpenJSCAD to use the generated file as a library
 const LIBRARY_HEADER = 'Specification = function() {};\n\n';
 
 // A prefix to allow OpenJSCAD access to the GearSpecifications
@@ -14,7 +14,7 @@ const COMPONENT_SUFFIX = ';';
 
 function SpecificationWriter(specFilePath) {
 	var specifications = [];
- 
+
 	this.getSpecifications = function() {
 		return specifications;
 	}
@@ -25,15 +25,15 @@ function SpecificationWriter(specFilePath) {
 		}
 	}
 
-	this.writeSpecificationToFile = function() {	
+	this.writeSpecificationToFile = function() {
 		var string = LIBRARY_HEADER + COMPONENT_PREFIX;
 		string += JSON.stringify(specifications, null, 2);
 		string += COMPONENT_SUFFIX;
 		fs.writeFileSync(specFilePath, string);
 	}
-  
-  this.generateSpec = function(componentArray) {
-    this.addAllComponents(componentArray);
-    this.writeSpecificationToFile();
-  }
+
+	this.generateSpec = function(componentArray) {
+		this.addAllComponents(componentArray);
+		this.writeSpecificationToFile();
+	}
 }

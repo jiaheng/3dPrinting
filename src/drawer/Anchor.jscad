@@ -24,7 +24,7 @@ Anchor.make = function(specification, params) {
 	// fork
 	var fork;
 	cubeSpec.length = specification.forkLength;
-	cubeSpec.width = specification.anchorWidth;
+	cubeSpec.width = specification.forkWidth;
 	cubeSpec.height = specification.thickness;
 	fork = Rectangle.make(cubeSpec, params);
 	// make connector

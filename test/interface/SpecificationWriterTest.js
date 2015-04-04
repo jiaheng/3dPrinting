@@ -24,7 +24,7 @@
  * Tests the SpecificationWriter, which should translate Component 
  * Specifications into Specifications that are understandable by the 3D Drawer.
  */
-
+/*
 var should = require('should');
 var fs = require('fs');
 var Configuration = require(__dirname + '/../Config.js');
@@ -135,3 +135,4 @@ function shouldWriteSpecificationsToFile(writeFunction,
 		})
 	})
 }
+*/

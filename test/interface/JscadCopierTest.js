@@ -8,17 +8,16 @@ describe('JscadCopier', function() {
 	var copier, targetPath
 
 	beforeEach(function() {
-		copier = new JscadCopier(Config.targetDirectory,
-			                                 Config.sourceDirectories) 
-		targetPath = Config.targetDirectory
+		copier = new JscadCopier(Config.targetDir, Config.sourceDir)
+		targetPath = Config.targetDir
 	})
 
 	describe('#copyJscadToTargetDirectory', function() {
-		var sourceDirectories, sourceFiles
+		var sourceDir, sourceFiles
 
 		beforeEach(function() {
-			sourceDirectories = Config.sourceDirectories; 
-			sourceFiles = findAllJscadFilesIn(sourceDirectories);
+			sourceDir = Config.sourceDir;
+			sourceFiles = findAllJscadFilesIn(sourceDir);
 			copier.copyToTargetDir();
 		})
 
@@ -33,12 +32,11 @@ describe('JscadCopier', function() {
 			return sourceFiles
 		}
 
-		it('should copy all the files in the source directories into the target '
-			 + 'directory', function() {
+		it('copy jscad files from source dir into the target dir', function() {
 			sourceFiles.forEach(function(file) {
 				fs.existsSync(targetPath + '/' + file).should.be.true;
 			})
-		})	
+		})
 
 		describe('when the target directory doesn\'t exist', function() {
 			beforeEach(function() {
@@ -55,7 +53,7 @@ describe('JscadCopier', function() {
 
 			it('should ensure the target directory exists', function() {
 				fs.existsSync(targetPath).should.be.true
-			})		
+			})
 		})
 	})
 })

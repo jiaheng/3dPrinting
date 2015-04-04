@@ -1,7 +1,6 @@
 var test = require('unit.js');
 var should = require('should');
 var Anchor = require(__dirname + '/../../src/component/Anchor.js').Anchor;
-var Anchor = require(__dirname + '/../../src/component/Anchor.js').Anchor;
 // var Spindle = require(__dirname + '/../../src/component/Spindle.js').Spindle;
 
 describe('Anchor', function () {
@@ -93,7 +92,16 @@ describe('Anchor', function () {
 		it('centre hole should smaller than centre ring radius', function() {
 			anchor.setCentreRingRadius(TEST_CENTRE_RING_RADIUS);
 			anchor.setCentreHoleRadius(TEST_CENTRE_RING_RADIUS + 1);
-			var err_msg = 'Centre hole should be smaller than centre ring radius';
+			var err_msg = 'Centre hole radius should be smaller than centre ring radius';
+			(function() {
+				anchor.toSpecification()
+			}).should.throw(err_msg);
+		})
+		
+		it('connector width should be larger than connect width', function() {
+			anchor.setConnectorWidth(TEST_CONNECTOR_WIDTH - 1);
+			anchor.setConnectWidth(TEST_CONNECTOR_WIDTH);
+			var err_msg = 'Anchor connector width should be larger than connect width';
 			(function() {
 				anchor.toSpecification()
 			}).should.throw(err_msg);
@@ -192,6 +200,15 @@ describe('Anchor', function () {
 			var err_msg = 'Anchor length should be larger than centre ring radius';
 			anchor.setAnchorLength(TEST_ANCHOR_LENGTH);
 			anchor.setCentreRingRadius(TEST_ANCHOR_LENGTH + 1);
+			(function() {
+				anchor.toSpecification();
+			}).should.throw(err_msg);
+		})
+		
+		it('connector length should be larger than connect length', function() {
+			var err_msg = 'Anchor connector length should be larger than connect length';
+			anchor.setConnectLength(TEST_CONNECT_LENGTH);
+			anchor.setConnectorLength(TEST_CONNECT_LENGTH - 1);
 			(function() {
 				anchor.toSpecification();
 			}).should.throw(err_msg);

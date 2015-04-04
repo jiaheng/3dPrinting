@@ -14,7 +14,6 @@ function Spring() {
 	const DEFAULT_SPRING_WIDTH = 1.5;
 	const DEFAULT_TURN = 8;
 	const DEFAULT_MAX_RADIUS = 40;
-	const DEFAULT_START_RADIUS = 14;
 	const DEFAULT_OUTER_CYLINDER_RADIUS = 15;
 	const DEFAULT_OUTER_CYLINDER_HEIGHT = 15;
 	const DEFAULT_INNER_CYLINDER_RADIUS = 10;
@@ -29,8 +28,6 @@ function Spring() {
 	var springWidth = DEFAULT_SPRING_WIDTH;
 	var turn = DEFAULT_TURN;
 	var maxRadius = DEFAULT_MAX_RADIUS;
-	var startRadius = DEFAULT_START_RADIUS;
-	var outerCylinderRadius = DEFAULT_OUTER_CYLINDER_RADIUS;
 	var outerCylinderHeight = DEFAULT_OUTER_CYLINDER_HEIGHT;
 	var innerCylinderRadius = DEFAULT_INNER_CYLINDER_RADIUS;
 	//var innerCylinderHeight = DEFAULT_INNER_CYLINDER_HEIGHT; // change to contrainable value
@@ -43,8 +40,12 @@ function Spring() {
 	
 	var innerCylinderHeight = new ConstrainableValue();
 	var height = new ConstrainableValue();
+	var startRadius = new ConstrainableValue();
+	var outerCylinderRadius = new ConstrainableValue();
 	height.sameAs(innerCylinderHeight);
+	startRadius.offsetByConstant(outerCylinderRadius, -1);
 	innerCylinderHeight.setValue(DEFAULT_INNER_CYLINDER_HEIGHT);
+	outerCylinderRadius.setValue(DEFAULT_OUTER_CYLINDER_RADIUS);
 	
 	spring.setCentre(0, 0, 0);
 
@@ -69,11 +70,11 @@ function Spring() {
 	}
 
 	spring.getStartRadius = function() {
-		return startRadius;
+		return startRadius.getValue();
 	}
-
+	
 	spring.getOuterCylinderRadius = function() {
-		return outerCylinderRadius;
+		return outerCylinderRadius.getValue();
 	}
 
 	spring.getOuterCylinderHeight = function() {
@@ -143,12 +144,8 @@ function Spring() {
 		maxRadius = newMaxRadius;
 	}
 
-	spring.setStartRadius = function(newStartRadius) {
-		startRadius = newStartRadius;
-	}
-
 	spring.setOuterCylinderRadius = function(newOuterCylinderRadius) {
-		outerCylinderRadius = newOuterCylinderRadius;
+		outerCylinderRadius.setValue(newOuterCylinderRadius);
 	}
 
 	spring.setOuterCylinderHeight = function(newOuterCylinderHeight) {
@@ -185,12 +182,19 @@ function Spring() {
 		height = newHeight;
 	}
 	*/
-	
-	spring.placeWith = function(otherComponent) {
+	var checkBeforePlacement = function(otherComponent) {
 		if (spring.isPlaceWithAnchor())
 			throw new Error('Spring already connected with another anchor');
 		if (otherComponent.getTypeName() != 'Anchor')
 			throw new Error("Spring can only place with an anchor");
+		
+		var diff = spring.getRoundedCubeWidth() - otherComponent.getConnectWidth(); 
+		if (Math.abs(diff) > 0.001)
+			throw new Error('Unable to place string with the anchor: the rounded cube width is not the same as connect width');
+	}
+	
+	spring.placeWith = function(otherComponent) {
+		checkBeforePlacement(otherComponent);
 		/*
 		var connectP = spring.getConnectPoint();
 		var otherConnectP = otherComponent.getConnectPoint();
@@ -267,8 +271,6 @@ function Spring() {
 			throw new Error('Number of turn must be more than zero');
 		if (spring.getMaxRadius() <= 0)
 			throw new Error('Max radius must be more than zero');
-		if (spring.getStartRadius() <= 0)
-			throw new Error('Start radius must be more than zero');
 		if (spring.getOuterCylinderRadius() <= 0)
 			throw new Error('Outer cylinder radius must be more than zero');
 		if (spring.getOuterCylinderHeight() <= 0)
@@ -286,14 +288,16 @@ function Spring() {
 		if (spring.getRoundedCubeLength() <=0)
 			throw new Error('Rounded cube length must be more than zero');
 		
+		if (spring.getOuterCylinderRadius() >= spring.getMaxRadius())
+			throw new Error("Max radius should larger than outer cylinder radius");
+		if (spring.getRoundedCubeHeight() >= spring.getInnerCylinderHeight()) 
+			throw new Error('Rounded cube height should be less than inner cylinder height');
 		if (spring.getOuterCylinderRadius() <= spring.getInnerCylinderRadius())
 			throw new Error('Outer cylinder radius should be more than inner cylinder radius');
 		if (spring.getOuterCylinderHeight() >= spring.getInnerCylinderHeight())
 			throw new Error('Outer cylinder height should be less than inner cylinder height');
 		if (spring.getCentreHoleRadius() >= spring.getInnerCylinderRadius())
 			throw new Error('Centre hole should be smaller than inner cylinder radius');
-		if (spring.getMaxRadius() <= spring.getStartRadius())
-			throw new Error('Max radius should larger than start radius');
 	}
 	
 	spring.toSpecification = function() {

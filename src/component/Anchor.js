@@ -12,19 +12,21 @@ function Anchor() {
 
 	const DEFAULT_THICKNESS = 10;
 	const DEFAULT_ANCHOR_LENGTH = 45;
+	const DEFAULT_ANCHOR_WIDTH = 4; 
 	const DEFAULT_FORK_LENGTH = 50;
+	const DEFAULT_FORK_WIDTH = 8;
 	const DEFAULT_CONNECT_WIDTH = 4;
 	const DEFAULT_CONNECT_LENGTH = 3;
 	const DEFAULT_CENTRE_HOLE_RADIUS = 3;
 	const DEFAULT_CENTRE_RING_RADIUS = 12;
 	const DEFAULT_HEIGHT = 10;
-	const DEFAULT_ANCHOR_WIDTH = 4; 
 	const DEFAULT_CONNECTOR_LENGTH = 9;
 	const DEFAULT_CONNECTOR_WIDTH = 8;
 
 	//var thickness = DEFAULT_THICKNESS; // change to constrainable value
 	var anchorLength = DEFAULT_ANCHOR_LENGTH;
 	var forkLength = DEFAULT_FORK_LENGTH;
+	var forkWidth = DEFAULT_FORK_WIDTH;
 	var connectWidth = DEFAULT_CONNECT_WIDTH;
 	var connectLength = DEFAULT_CONNECT_LENGTH;
 	var centreHoleRadius = DEFAULT_CENTRE_HOLE_RADIUS;
@@ -49,6 +51,8 @@ function Anchor() {
 			throw new Error('Anchor length must be more than zero');
 		if (anchor.getForkLength() <= 0)
 			throw new Error('Fork length must be more than zero');
+		if (anchor.getForkWidth() <= 0)
+			throw new Error('Fork width must be more than zero');
 		if (anchor.getConnectWidth() <= 0)
 			throw new Error('Connect width must be more than zero');
 		if (anchor.getConnectLength() <= 0)
@@ -65,11 +69,15 @@ function Anchor() {
 			throw new Error('Connector width must be more than zero');
 		
 		if (anchor.getCentreHoleRadius() >= anchor.getCentreRingRadius())
-			throw new Error('Centre hole should be smaller than centre ring radius');
+			throw new Error('Centre hole radius should be smaller than centre ring radius');
 		if (anchor.getCentreRingRadius() >= anchor.getForkLength())
 			throw new Error('Fork length should be larger than centre ring radius');
 		if (anchor.getCentreRingRadius() >= anchor.getAnchorLength())
 			throw new Error('Anchor length should be larger than centre ring radius');
+		if (anchor.getConnectorLength() <= anchor.getConnectLength())
+			throw new Error('Anchor connector length should be larger than connect length');
+		if (anchor.getConnectorWidth() <= anchor.getConnectWidth())
+			throw new Error('Anchor connector width should be larger than connect width');
 	}
 	
 	anchor.toSpecification = function() {
@@ -91,6 +99,10 @@ function Anchor() {
 	
 	anchor.getForkLength = function() {
 		return forkLength;
+	}
+	
+	anchor.getForkWidth = function() {
+		return forkWidth;
 	}
 	
 	anchor.getConnectWidth = function() {
@@ -162,6 +174,10 @@ function Anchor() {
 		forkLength = newLength;
 	}
 	
+	anchor.setForkWidth = function(newWidth) {
+		forkWidth = newWidth;
+	}
+	
 	anchor.setConnectWidth = function(w) {
 		connectWidth = w;
 	}
@@ -212,11 +228,19 @@ function Anchor() {
 		return point;
 	}
 
-	anchor.placeWith = function(otherComponent) {
+	var checkBeforePlacement = function(otherComponent) {
 		if (anchor.isPlaceWithSpring())
 			throw new Error('Anchor already connected with another spring');
 		if (otherComponent.getTypeName() != 'Spring')
 			throw new Error("Anchor can only place with a spring");
+		
+		var diff = anchor.getConnectWidth() - otherComponent.getRoundedCubeWidth();
+		if (Math.abs(diff) > 0.001)
+			throw new Error('Unable to place anchor with the spring: the rounded cube width is not the same as connect width');
+	}
+	
+	anchor.placeWith = function(otherComponent) {
+		checkBeforePlacement(otherComponent);
 		/*
 		var centre = anchor.getCentre();
 		var connectP = anchor.getConnectPoint();

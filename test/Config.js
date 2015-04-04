@@ -10,7 +10,7 @@ exports.jscadComponentDirectories = [ __dirname + '/../src/component' ]
  * The locations of all files that are necessary for the execution of the 3D
  * Drawer.
  */
-exports.sourceDirectories = [ __dirname + '/../src/drawer' ]
+exports.sourceDir = [ __dirname + '/../src/drawer' ]
 		.concat(exports.jscadComponentDirectories)
 
 /*
@@ -18,7 +18,7 @@ exports.sourceDirectories = [ __dirname + '/../src/drawer' ]
  * program executes successfully. These are the files that are used to generate
  * the 3D CAD product.
  */
-exports.targetDirectory = __dirname + '/test_output/'
+exports.targetDir = __dirname + '/test_output/'
 
 /*
  * The location of the static parameters that are always included in the 3D
@@ -30,9 +30,9 @@ exports.paramFilePath = __dirname
 /*
  * The target location of the Specification file
  */
-exports.specFileTarget = exports.targetDirectory + 'Specification.jscad'
+exports.specFileTarget = exports.targetDir + 'Specification.jscad'
 
 /*
  * The target location of the main file (necessary for OpenJSCAD)
  */
-exports.mainFileTarget = exports.targetDirectory + 'main.jscad'
+exports.mainFileTarget = exports.targetDir + 'main.jscad'

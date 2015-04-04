@@ -50,11 +50,6 @@ describe('Spring', function () {
 			should(spring.getMaxRadius()).be.equal(TEST_MAX_RADIUS);
 		})
 		
-		it('set start radius', function() {
-			spring.setStartRadius(TEST_START_RADIUS);
-			should(spring.getStartRadius()).be.equal(TEST_START_RADIUS);
-		})
-		
 		it('set outer cylinder radius', function() {
 			spring.setOuterCylinderRadius(TEST_OUTER_CYLINDER_RADIUS);
 			should(spring.getOuterCylinderRadius()).be.equal(TEST_OUTER_CYLINDER_RADIUS);
@@ -101,6 +96,17 @@ describe('Spring', function () {
 			spring = new Spring();
 		})
 		
+		it('rounded cube height should be less than inner cylinder height', function() {
+			var roundedCubeHeight = TEST_ROUNDED_CUBE_HEIGHT;
+			var innerCylinderHeight = TEST_ROUNDED_CUBE_HEIGHT - 1;
+			var err_msg = 'Rounded cube height should be less than inner cylinder height';
+			spring.setRoundedCubeHeight(roundedCubeHeight);
+			spring.setInnerCylinderHeight(innerCylinderHeight);
+			(function() {
+				spring.toSpecification();
+			}).should.throw(err_msg);
+		})
+		
 		it('outer cylinder radius should be more than inner cylinder radius', function() {
 			var outer = TEST_OUTER_CYLINDER_RADIUS; 
 			var inner = TEST_OUTER_CYLINDER_RADIUS + 2; // bigger value
@@ -113,8 +119,8 @@ describe('Spring', function () {
 		})
 		
 		it('outer cylinder height should be less than inner cylinder height', function() {
-			var outer = TEST_OUTER_CYLINDER_HEIGHT;
-			var inner = TEST_OUTER_CYLINDER_HEIGHT - 3; // smaller value
+			var outer = TEST_INNER_CYLINDER_HEIGHT + 3; // bigger value
+			var inner = TEST_INNER_CYLINDER_HEIGHT; 
 			var err_msg = 'Outer cylinder height should be less than inner cylinder height';
 			spring.setInnerCylinderHeight(inner);
 			spring.setOuterCylinderHeight(outer);
@@ -128,6 +134,11 @@ describe('Spring', function () {
 			should(spring.getHeight()).be.equal(TEST_INNER_CYLINDER_HEIGHT);
 		})
 		
+		it('outer cylinder radius is 1 unit(mm) more than start radius', function() {
+			spring.setOuterCylinderRadius(TEST_OUTER_CYLINDER_RADIUS);
+			should(spring.getStartRadius()).be.equal(TEST_OUTER_CYLINDER_RADIUS - 1);
+		})
+		
 		it('centre hole should smaller than inner cylinder radius', function() {
 			spring.setInnerCylinderRadius(TEST_INNER_CYLINDER_RADIUS);
 			spring.setCentreHoleRadius(TEST_INNER_CYLINDER_RADIUS+1);
@@ -137,10 +148,10 @@ describe('Spring', function () {
 			}).should.throw(err_msg);
 		})
 		
-		it('max radius should larger than start radius', function() {
+		it('max radius should larger than outer cylinder radius', function() {
 			spring.setMaxRadius(TEST_MAX_RADIUS);
-			spring.setStartRadius(TEST_MAX_RADIUS + 1);
-			var err_msg = 'Max radius should larger than start radius';
+			spring.setOuterCylinderRadius(TEST_MAX_RADIUS + 1);
+			var err_msg = 'Max radius should larger than outer cylinder radius';
 			(function() {
 				spring.toSpecification();
 			}).should.throw(err_msg);
@@ -173,14 +184,6 @@ describe('Spring', function () {
 		it('max radius should be more than zero', function() {
 			var err_msg = 'Max radius must be more than zero';
 			spring.setMaxRadius(-1);
-			(function() {
-				spring.toSpecification();
-			}).should.throw(err_msg);
-		})
-		
-		it('start radius should be more than zero', function() {
-			var err_msg = 'Start radius must be more than zero';
-			spring.setStartRadius(-1);
 			(function() {
 				spring.toSpecification();
 			}).should.throw(err_msg);

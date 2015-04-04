@@ -82,6 +82,94 @@ describe('Spring/Anchor Placement', function() {
 		should(point.getZ().getValue()).be.equal(z);
 	})
 	
+	it('spring can only place with an anchor with correct size', function() {
+		var roundedCubeLength = 5;
+		var roundedCubeWidth = 4;
+		var roundedCubeHeight = 20;
+		
+		var anchorThickness = 10;
+		var connectWidth = 4;
+		var connectLength = 3;
+		
+		spring.setRoundedCubeLength(roundedCubeLength);
+		spring.setRoundedCubeWidth(roundedCubeWidth);
+		spring.setRoundedCubeHeight(roundedCubeHeight);
+		
+		anchor.setThickness(anchorThickness);
+		anchor.setConnectWidth(connectWidth);
+		anchor.setConnectLength(connectLength);
+		
+		spring.placeWith(anchor);
+	})
+	
+	it('anchor can only place with a spring with correct size', function() {
+		var roundedCubeLength = 5;
+		var roundedCubeWidth = 4;
+		var roundedCubeHeight = 20;
+		
+		var anchorThickness = 10;
+		var connectWidth = 4;
+		var connectLength = 3;
+		
+		spring.setRoundedCubeLength(roundedCubeLength);
+		spring.setRoundedCubeWidth(roundedCubeWidth);
+		spring.setRoundedCubeHeight(roundedCubeHeight);
+		
+		anchor.setThickness(anchorThickness);
+		anchor.setConnectWidth(connectWidth);
+		anchor.setConnectLength(connectLength);
+		
+		anchor.placeWith(spring);
+	})
+	
+	it('spring place with anchor with invalid rounded cube width', function() {
+		var roundedCubeLength = 5;
+		var roundedCubeWidth = 3; // NOT the same as connect Width
+		var roundedCubeHeight = 20;
+		
+		var anchorThickness = 10;
+		var connectWidth = 4;
+		var connectLength = 3;
+		
+		var err_msg = 'Unable to place string with the anchor: the rounded cube width is not the same as connect width';
+		
+		spring.setRoundedCubeLength(roundedCubeLength);
+		spring.setRoundedCubeWidth(roundedCubeWidth);
+		spring.setRoundedCubeHeight(roundedCubeHeight);
+		
+		anchor.setThickness(anchorThickness);
+		anchor.setConnectWidth(connectWidth);
+		anchor.setConnectLength(connectLength);
+		
+		(function() {
+			spring.placeWith(anchor);
+		}).should.throw(err_msg);
+	})
+	
+	it('anchor place with anchor with invalid rounded cube width', function() {
+		var roundedCubeLength = 5;
+		var roundedCubeWidth = 3; // NOT the same as connect Width
+		var roundedCubeHeight = 20;
+		
+		var anchorThickness = 10;
+		var connectWidth = 4;
+		var connectLength = 3;
+		
+		var err_msg = 'Unable to place anchor with the spring: the rounded cube width is not the same as connect width';
+		
+		spring.setRoundedCubeLength(roundedCubeLength);
+		spring.setRoundedCubeWidth(roundedCubeWidth);
+		spring.setRoundedCubeHeight(roundedCubeHeight);
+		
+		anchor.setThickness(anchorThickness);
+		anchor.setConnectWidth(connectWidth);
+		anchor.setConnectLength(connectLength);
+		
+		(function() {
+			anchor.placeWith(spring);
+		}).should.throw(err_msg);
+	})
+	
 	it('spring cannot place with a spring', function() {
 		var spring2 = new Spring();
 		var err_msg = 'Spring can only place with an anchor';

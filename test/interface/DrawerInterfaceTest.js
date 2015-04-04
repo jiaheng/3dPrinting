@@ -1,31 +1,4 @@
-/*
- * This file is part of programmatic-3d-printing, a programmatic 3d printer 
- * language, Copyright (c) 2014, Daniel Patterson <dan24patt@gmail.com>.
- * All rights reserved.
- * 
- * programmatic-3d-printing is free software; you can redistribute it and/or
- * modify it under the terms of the GNU General Public License
- * as published by the Free Software Foundation; either version 2
- * of the License, or (at your option) any later version.
- * 
- * programmatic-3d-printing is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- * 
- * You should have received a copy of the GNU General Public License
- * along with this program; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111, USA.
- */
-
-/*
- * author: Daniel Patterson
- *
- * Tests the DrawerInterface which coordinates the conversion of the Component
- * system into OpenJSCAD files.
- */
-/*
-var should = require('should')
+/*var should = require('should')
 var fs = require('fs')
 var Configuration = require('../tests/TestConfiguration.js')
 var DrawerInterface = require('../interface/DrawerInterface.js').DrawerInterface
@@ -236,5 +209,4 @@ describe('DrawerInterface', function() {
 		})
 	})
 	
-})
-*/
+})*/
