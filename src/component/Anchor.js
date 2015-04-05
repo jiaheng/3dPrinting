@@ -2,6 +2,7 @@ var Component = require('./Component.js').Component;
 var AnchorSpecification = require('../interface/AnchorSpecification.js').AnchorSpecification;
 var Point = require('../geometry/Point.js').Point;
 var Rectangle = require('../geometry/Rectangle.js').Rectangle;
+var Circle = require('../geometry/Circle.js').Circle;
 var Spindle = require('./Spindle.js').Spindle;
 var ConstrainableValue = require('../constraint/ConstrainableValue.js').ConstrainableValue;
 
@@ -256,6 +257,8 @@ function Anchor() {
 	}
 
 	anchor.link = function(otherComponent) {
+		if (anchor.isPlaceWithSpring())
+			throw new Error('Anchor already place with a spring');
 		if (otherComponent.getConnectedAnchor() === anchor)
 			anchor.connectedSpring = otherComponent;
 		else
@@ -330,6 +333,35 @@ function Anchor() {
 		var newY = centre.getY().getValue() + springConnectP.getY().getValue() - connectP.getY().getValue();
 		var newZ = centre.getZ().getValue() + springConnectP.getZ().getValue() - connectP.getZ().getValue();
 		anchor._setCentre(newX, newY, newZ); // call super method setCentre only
+	}
+	
+	anchor._checkCollideWith = anchor.checkCollideWith;
+	
+	anchor.checkCollideWith = function(component) {
+		if (anchor.getConnectedSpring() == component)
+			return;
+		anchor._checkCollideWith(component);
+	}
+
+	anchor.getBoundaryShapes = function() {
+		var shapes = [];
+		var shape;
+		var centre = anchor.getCentre();
+		var x, y, z;
+		
+		// find largest radius for circle
+		// compare fork+connector length with anchor
+		var forkLength = anchor.getForkLength() + anchor.getConnectorLength();
+		var anchorLength = anchor.getAnchorLength();
+		var radius = forkLength > anchorLength? forkLength : anchorLength;
+		
+		shape = new Circle();
+		shape.setRadius(radius);
+		shape.setHeight(anchor.getThickness());
+		shape.setCentre(centre);
+		shapes.push(shape);
+		
+		return shapes;
 	}
 	
 	return anchor;

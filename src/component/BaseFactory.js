@@ -95,13 +95,20 @@ function BaseFactory() {
 			var basePoint = components[i].getBaseCoor();
 			var compZ = basePoint.getZ().getValue();
 			
-			//console.log('component altitute ' + compZ + ' and floor altitute ' + floorZ)
-			
 			// if the component position is higher than the base floor
 			if (compZ > floorZ) {
 				var support = components[i].addSupport(floorZ);
+				checkSupportCollideWithComponents(support, i);
 				base.addPart(support);
 			}
 		}
 	}
+	
+	var checkSupportCollideWithComponents = function(support, index) {
+		for (var i = 0; i < components.length; i++) {
+			if (i === index) continue;
+			var shapes = components.getBoundaryShapes();
+		}
+	}
+	
 }

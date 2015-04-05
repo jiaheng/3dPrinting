@@ -4,6 +4,7 @@ var Point = require('../geometry/Point.js').Point;
 var Spindle = require('./Spindle.js').Spindle;
 var ConstrainableValue = require('../constraint/ConstrainableValue.js').ConstrainableValue;
 var Rectangle = require('../geometry/Rectangle.js').Rectangle;
+var Circle = require('../geometry/Circle.js').Circle;
 
 module.exports.Spring = Spring
 
@@ -216,6 +217,8 @@ function Spring() {
 	}
 
 	spring.link = function(otherComponent) {
+		if (spring.isPlaceWithAnchor())
+			throw new Error('Spring already place with an anchor');
 		if (otherComponent.getConnectedSpring() === spring)
 			spring.connectedAnchor = otherComponent;
 		else
@@ -352,6 +355,61 @@ function Spring() {
 		var newY = centre.getY().getValue() + anchorConnectP.getY().getValue() - connectP.getY().getValue();
 		var newZ = centre.getZ().getValue() + anchorConnectP.getZ().getValue() - connectP.getZ().getValue();
 		spring._setCentre(newX, newY, newZ); // call super method setCentre only
+	}
+	
+	spring._checkCollideWith = spring.checkCollideWith;
+
+	spring.checkCollideWith = function(component) {
+		if (spring.getConnectedAnchor() == component)
+			return;
+		spring._checkCollideWith(component);
+	}
+	
+	spring.getBoundaryShapes = function() {
+		var shapes = [];
+		var shape;
+		var centre = spring.getCentre();
+		var x, y, z
+		
+		// spiral spring shape
+		shape = new Circle();
+		shape.setRadius(spring.getMaxRadius() + spring.getSpringWidth()/2);
+		shape.setHeight(spring.getSpringThickness());
+		shape.setCentre(centre);
+		shapes.push(shape);
+		
+		// outer cylinder shape
+		shape = new Circle();
+		shape.setRadius(spring.getOuterCylinderRadius());
+		shape.setHeight(spring.getOuterCylinderHeight());
+		x = centre.getX().getValue();
+		y = centre.getY().getValue();
+		z = centre.getZ().getValue() + spring.getOuterCylinderHeight() / 2;
+		shape.setCentre(x, y, z);
+		shapes.push(shape);
+		
+		// inner cylinder shape
+		shape = new Circle();
+		shape.setRadius(spring.getInnerCylinderRadius());
+		shape.setHeight(spring.getInnerCylinderHeight());
+		x = centre.getX().getValue();
+		y = centre.getY().getValue();
+		z = centre.getZ().getValue() + spring.getInnerCylinderHeight() / 2
+		shape.setCentre(x, y, z);
+		shapes.push(shape);
+		
+		// rounded cube shape
+		shape = new Rectangle();
+		shape.setLength(spring.getRoundedCubeWidth()); // rectangle length is on x axis
+		shape.setWidth(spring.getRoundedCubeLength() + spring.getRoundedCubeWidth()/2); // rectangle width is on y axis
+		shape.setHeight(spring.getRoundedCubeHeight());
+		x = centre.getX().getValue();
+		y = centre.getY().getValue() + spring.getInnerCylinderRadius() + spring.getRoundedCubeLength()/2;
+		z = centre.getZ().getValue() + spring.getHeight() - spring.getRoundedCubeHeight() / 2;
+		shape.setCentre(x, y, z);
+		shapes.push(shape);
+		
+		return shapes;
 	}
 	
 	return spring;

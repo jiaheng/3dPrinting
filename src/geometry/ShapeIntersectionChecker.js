@@ -20,7 +20,11 @@
 
 /*
  * author: Daniel Patterson
- *
+ * 
+ * edited by Jia Heng Eik
+ * fix checkIfTwoRectanglesIntersectHorizontally method not working as intended
+ * fix checkIfTwoRectanglesIntersect method not working as intended
+ * 
  * Checks whether Shapes intersect
  */
 module.exports.ShapeIntersectionChecker = ShapeIntersectionChecker
@@ -67,11 +71,11 @@ function ShapeIntersectionChecker() {
 
 	var checkIfTwoRectanglesIntersect = function() {
 		return checkIfTwoRectanglesIntersectHorizontally()
-				&& checkIfTwoRectanglesIntersectVertically()
+				|| checkIfTwoRectanglesIntersectVertically()
 	}
 
 	var checkIfTwoRectanglesIntersectHorizontally = function() {
-		var combinedLength = second.getLength() + second.getLength()
+		var combinedLength = first.getLength() + second.getLength()
 		var centreXDifference = first.getCentre().distanceToOnAxis(
 				second.getCentre(), 'X')
 

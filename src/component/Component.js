@@ -36,6 +36,22 @@ Component.makeNextID = function() {
 	return (nextID - 1)
 }
 
+var isIntersectAtZ = function(shape1, shape2) {
+	var z1 = shape1.getCentre().getZ().getValue();
+	var z2 = shape2.getCentre().getZ().getValue();
+	var height1 = shape1.getHeight();
+	var height2 = shape2.getHeight();
+	var minZ1 = z1 - height1 / 2;
+	var maxZ1 = z1 + height1 / 2;
+	var minZ2 = z2 - height2 / 2;
+	var maxZ2 = z2 + height2 / 2;
+	if (minZ1 >= minZ2 && minZ1 <= maxZ2)
+		return true;
+	if (minZ2 >= minZ1 && minZ2 <= maxZ1)
+		return true;
+	return false;
+}
+
 function Component(boundaryShape) {
 	if (boundaryShape == undefined)
 		boundaryShape = Circle
@@ -75,6 +91,33 @@ function Component(boundaryShape) {
 			return "Component"
 		},
 
+		checkCollideWith : function(component) {
+			var shapes = this.getBoundaryShapes();
+			var otherShapes = component.getBoundaryShapes();
+			for (var i = 0; i < shapes.length; i++) {
+				for (var j = 0; j < otherShapes.length; j++) {
+					// TODO: remove if below
+					/*
+					if(shapes[i].getType() == 'Rectangle' && shapes[i].getCentre().getZ().getValue() == 20 || 
+							otherShapes[j].getType() == 'Rectangle' && otherShapes[j].getCentre().getZ().getValue() == 20) {
+						console.log(shapes[i].getType() + ' shape[i] at ' + shapes[i].getCentre().toString() + ' and height ' + shapes[i].getHeight());
+						console.log(otherShapes[j].getType() + ' otherShape[j] at ' + otherShapes[j].getCentre().toString() + ' and height ' + otherShapes[j].getHeight());
+						console.log('touching? ' + shapes[i].isTouching(otherShapes[j]));
+						console.log();
+					}*/
+					if (shapes[i].isTouching(otherShapes[j]) && isIntersectAtZ(shapes[i], otherShapes[j])) {
+						var err_msg = this.getTypeName() + ' is collide with ' + component.getTypeName();
+						throw new Error(err_msg);
+					}
+				}
+			}
+		},
+		
+		// sub classes need to overwrite this method to work properly
+		getBoundaryShapes : function() {
+			throw new Error('Subclass "getBoundaryShapes" method is not defined');
+		},
+		
 		isTouching : function(otherComponent) {
 			return this.boundingShape.isTouching(otherComponent
 					.getBoundingShape())

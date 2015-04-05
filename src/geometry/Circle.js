@@ -39,6 +39,8 @@ function Circle() {
 	var circle = Shape()
 	var radius = new ConstrainableValue()
 	var diameter = new ConstrainableValue()
+	var height = new ConstrainableValue();
+	
 	diameter.scaledByConstant(radius, 2)
 
 	circle.getType = function() {
@@ -61,6 +63,14 @@ function Circle() {
 		return diameter.getValue()
 	}
 
+	circle.getHeight = function() {
+		return height.getValue();
+	}
+	
+	circle.setHeight = function(h) {
+		height.setValue(h);
+	}
+	
 	circle.toSpecification = function() {
 		checkCanGenerateSpecification()
 		return new CircleSpecification(circle)
