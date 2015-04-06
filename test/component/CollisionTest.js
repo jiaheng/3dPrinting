@@ -44,7 +44,7 @@ describe('Spring/Anchor Placement', function() {
 	})
 	
 	it('anchor should collide if spring is close but not linked', function() {
-		spring.setCentre(0, 0, 10);
+		spring.setCentre(10, 10, 10);
 		anchor.placeWith(spring);
 		anchor.unlink();
 		(function() {
@@ -53,6 +53,7 @@ describe('Spring/Anchor Placement', function() {
 	})
 	
 	it('spring should collide if anchor is close but not linked', function() {
+		anchor.setCentre(10, 10, 10);
 		spring.placeWith(anchor);
 		spring.unlink();
 		(function() {
@@ -108,13 +109,30 @@ describe('Spring/Anchor Placement', function() {
 		// all components are not collide with each other
 		spring.placeWith(anchor);
 		spring2.placeWith(anchor2);
-		spring.setCentre(0, 0, 0);
-		anchor.setCentre(0, 0, 50);
+		anchor.setCentre(0, 0, 0);
+		anchor2.setCentre(0, 0, 50);
 		
 		components.push(spring);
 		components.push(anchor);
 		components.push(spring2);
 		components.push(anchor2);
+		
+		(function() {
+			baseFactory.makeBase(components);
+		}).should.throw(/base generated is collide with some components/i);
+	})
+	
+	it('base generated will collide with some components 2', function() {
+		var baseFactory = new BaseFactory();
+		var components = [];
+		
+		// all components are not collide with each other
+		var maxRadius = spring.getMaxRadius();
+		anchor.setCentre(maxRadius, maxRadius, 50);
+		spring.setCentre(0, 0, 0);
+		
+		components.push(spring);
+		components.push(anchor);
 		
 		(function() {
 			baseFactory.makeBase(components);

@@ -64,32 +64,8 @@ Spring.make = function(specification, params) {
 									- (specification.roundedCubeHeight + specification.springThickness)
 									/ 2 ]);
 	spring = spring.union(connect);
-	/*
-	 * No longer needed cubeSpec.length = specification.roundedCubeLength;
-	 * cubeSpec.width = specification.roundedCubeWidth; cubeSpec.height =
-	 * specification.roundedCubeHeight; cube = Rectangle.make(cubeSpec, params);
-	 * cube = cube.rotateZ(90); cube = cube.translate([0,
-	 * -specification.roundedCubeLength/2, specification.height -
-	 * (specification.roundedCubeHeight+specification.springThickness)/2]);
-	 * 
-	 * spring = spring.union(cube); // rounded cube on one side of the rectangle
-	 * cylinder = CSG.cylinder({ start: [0, -specification.roundedCubeLength,
-	 * specification.innerCylinderHeight - specification.springThickness/2], end: [0,
-	 * -specification.roundedCubeLength, specification.innerCylinderHeight -
-	 * specification.springThickness/2 - specification.roundedCubeHeight], radius:
-	 * specification.roundedCubeWidth/2, resolution: params.circleRes }); spring =
-	 * spring.union(cylinder);
-	 */
 	spring = Utils.removeCentreHole(spring, specification, params);
 
 	return spring;
 };
-
-/*
- * No longer needed function removeCentreHole(spring, specification, params) {
- * if(specification.centreHoleRadius > 0) { var spec = {}; spec.radius =
- * specification.centreHoleRadius; spec.height = specification.height*2; var
- * centerHole = Circle.make(spec, params); spring = spring.subtract(centerHole); }
- * return spring; };
- */
 

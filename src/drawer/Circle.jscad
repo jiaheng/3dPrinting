@@ -1,3 +1,6 @@
+/**
+ * Daniel's code
+ */
 Circle = function() {
 };
 

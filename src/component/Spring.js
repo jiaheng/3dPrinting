@@ -23,7 +23,6 @@ function Spring() {
 	const DEFAULT_ROUNDED_CUBE_HEIGHT = 20;
 	const DEFAULT_ROUNDED_CUBE_LENGTH = 5;
 	const DEFAULT_ROUNDED_CUBE_WIDTH = 4;
-	//const DEFAULT_HEIGHT = 30;
 
 	var springThickness = DEFAULT_SPRING_THICKNESS;
 	var springWidth = DEFAULT_SPRING_WIDTH;
@@ -31,12 +30,10 @@ function Spring() {
 	var maxRadius = DEFAULT_MAX_RADIUS;
 	var outerCylinderHeight = DEFAULT_OUTER_CYLINDER_HEIGHT;
 	var innerCylinderRadius = DEFAULT_INNER_CYLINDER_RADIUS;
-	//var innerCylinderHeight = DEFAULT_INNER_CYLINDER_HEIGHT; // change to contrainable value
 	var centreHoleRadius = DEFAULT_CENTRE_HOLE_RADIUS;
 	var roundedCubeHeight = DEFAULT_ROUNDED_CUBE_HEIGHT;
 	var roundedCubeLength = DEFAULT_ROUNDED_CUBE_LENGTH;
 	var roundedCubeWidth = DEFAULT_ROUNDED_CUBE_WIDTH;
-	//var height = DEFAULT_HEIGHT; // change to contrainable value
 	var connectedAnchor = null;
 	
 	var innerCylinderHeight = new ConstrainableValue();
@@ -177,12 +174,6 @@ function Spring() {
 		roundedCubeWidth = newRoundedCubeWidth;
 	}
 	
-	/**
-	 * cannot set height
-	spring.setHeight = function(newHeight) {
-		height = newHeight;
-	}
-	*/
 	var checkBeforePlacement = function(otherComponent) {
 		if (spring.isPlaceWithAnchor())
 			throw new Error('Spring already connected with another anchor');
@@ -196,21 +187,6 @@ function Spring() {
 	
 	spring.placeWith = function(otherComponent) {
 		checkBeforePlacement(otherComponent);
-		/*
-		var connectP = spring.getConnectPoint();
-		var otherConnectP = otherComponent.getConnectPoint();
-		var newX = otherConnectP.getX().getValue() - connectP.getX().getValue();
-		var newY = otherConnectP.getY().getValue() - connectP.getY().getValue();
-		var newZ = otherConnectP.getZ().getValue() - connectP.getZ().getValue();
-		*/
-		/*
-		 * console.log(otherConnectP.getX().getValue());
-		 * console.log(otherConnectP.getY().getValue());
-		 * console.log(otherConnectP.getZ().getValue()); console.log('new x: ' +
-		 * newX + '\tnew y: ' + newY + '\tnew z: ' + newZ);
-		 */
-		//spring.setCentre(newX, newY, newZ);
-
 		spring.connectedAnchor = otherComponent;
 		spring.relocate();
 		otherComponent.link(spring);
@@ -240,7 +216,7 @@ function Spring() {
 		
 		var x = centre.getX().getValue();
 		var y = centre.getY().getValue() - innerCylinderRadius
-				- roundedCubeLength + 1; // TODO:1 unit further?
+				- roundedCubeLength + 1; 
 		var z = centre.getZ().getValue() + height - (thickness) / 2;
 		point.setAt(x, y, z);
 		return point;
@@ -308,7 +284,6 @@ function Spring() {
 		return new SpringSpecification(spring);
 	}
 	
-	// TODO: change to cylinder
 	spring.addSupport = function(floorZ) {
 		var baseCoor = spring.getBaseCoor();
 		var bottomZ = baseCoor.getZ().getValue();
@@ -404,7 +379,7 @@ function Spring() {
 		shape.setWidth(spring.getRoundedCubeLength() + spring.getRoundedCubeWidth()/2); // rectangle width is on y axis
 		shape.setHeight(spring.getRoundedCubeHeight());
 		x = centre.getX().getValue();
-		y = centre.getY().getValue() + spring.getInnerCylinderRadius() + spring.getRoundedCubeLength()/2;
+		y = centre.getY().getValue() - spring.getInnerCylinderRadius() - spring.getRoundedCubeLength()/2;
 		z = centre.getZ().getValue() + spring.getHeight() - spring.getRoundedCubeHeight() / 2;
 		shape.setCentre(x, y, z);
 		shapes.push(shape);

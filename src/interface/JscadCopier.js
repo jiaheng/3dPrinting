@@ -39,10 +39,6 @@ function JscadCopier(targetDir, sourceDir) {
 
 	var copyFile = function(sourceDir, file) {
 		var contents = fs.readFileSync(sourceDir + '/' + file);
-		// TODO: delete line
-		// contents = (sourceDir + file + '\n').concat(contents)
-		// contents = SOURCE_LABEL.concat(contents)
-		// contents = HEADER_COMMENT.concat(contents)
 		fs.writeFileSync(targetDir + '/' + file, contents);
 	}
 }

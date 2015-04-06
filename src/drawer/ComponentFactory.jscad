@@ -1,3 +1,7 @@
+/**
+ * Daniel's code
+ * edited by Jia Heng modify some method to make it compatible with spring/anchor framework
+ */
 ComponentFactory = function() {
 };
 

@@ -15,8 +15,7 @@ Spiral.make = function(specification, params) {
 	var rotation = specification.turn;
 	var max_r = specification.maxRadius;
 	
-	var max_slices = (rotation * max_r) / 10 * params.circleRes; // default
-																	// 1000
+	var max_slices = (rotation * max_r) / 10 * params.circleRes;
 	var total_rad = Math.PI * 2 * rotation;
 	var total_deg = 360 * rotation;
 	var rIncrement = (max_r - startR) / max_slices;
@@ -31,6 +30,8 @@ Spiral.make = function(specification, params) {
 			[ radius * sqrt3, 0, -radius / 2 ], [ 0, 0, -radius ],
 			[ -radius * sqrt3, 0, -radius / 2 ],
 			[ -radius * sqrt3, 0, radius / 2 ] ]);
+	
+	// rectangle cross section
 	var rec = CSG.Polygon.createFromPoints([ [width, 0, length],
 	                                         [width, 0, -length],
 	                                         [-width, 0, -length],

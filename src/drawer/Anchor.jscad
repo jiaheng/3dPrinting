@@ -49,66 +49,43 @@ Anchor.make = function(specification, params) {
 	cylinder = cylinder.translate([ -holeLength / 2, 0, 0 ]);
 	hole = cube.union(cylinder);
 	
-	/*
-	 * var points = [ [cubeSpec.length/2, cubeSpec.width/2, cubeSpec.height/2],
-	 * [cubeSpec.length/2, cubeSpec.width/2, -cubeSpec.height/2],
-	 * [cubeSpec.length/2, cubeSpec.width/2 + 1, -cubeSpec.height/2],
-	 * [cubeSpec.length/2, cubeSpec.width/2 + 1, cubeSpec.height/2],
-	 * [cubeSpec.length/2 - 1, cubeSpec.width/2, cubeSpec.height/2],
-	 * [cubeSpec.length/2 - 1, cubeSpec.width/2, -cubeSpec.height/2] ]; var
-	 * polygon = CSG.Polygon.createFromPoints(points);
-	 */
-	/*
-	 * var polygons = []; polygons.push(new CSG.Polygon([ new CSG.Vertex(new
-	 * CSG.Vector3D(cubeSpec.length/2, cubeSpec.width/2, cubeSpec.height/2)),
-	 * new CSG.Vertex(new CSG.Vector3D(cubeSpec.length/2, cubeSpec.width/2,
-	 * -cubeSpec.height/2)), new CSG.Vertex(new CSG.Vector3D(cubeSpec.length/2,
-	 * cubeSpec.width/2 + 1, -cubeSpec.height/2)), new CSG.Vertex(new
-	 * CSG.Vector3D(cubeSpec.length/2, cubeSpec.width/2 + 1,
-	 * +cubeSpec.height/2)), new CSG.Vertex(new CSG.Vector3D(cubeSpec.length/2 -
-	 * 1, cubeSpec.width/2, cubeSpec.height/2)), new CSG.Vertex(new
-	 * CSG.Vector3D(cubeSpec.length/2 - 1, cubeSpec.width/2,
-	 * -cubeSpec.height/2)) ]) ); // add more polygons and finally: var solid =
-	 * CSG.fromPolygons(polygons);
-	 */
 	// outer hole is wider
 	var solid = polyhedron({
 		points : [
-				[ cubeSpec.length / 2, cubeSpec.width / 2, cubeSpec.height / 2 ], // 0
-				[ cubeSpec.length / 2, cubeSpec.width / 2, -cubeSpec.height / 2 ], // 1
+				[ cubeSpec.length / 2, cubeSpec.width / 2, cubeSpec.height / 2 ], 
+				[ cubeSpec.length / 2, cubeSpec.width / 2, -cubeSpec.height / 2 ], 
 				[ cubeSpec.length / 2, specification.connectorWidth / 2,
-						cubeSpec.height / 2 ], // 2
+						cubeSpec.height / 2 ],
 				[ cubeSpec.length / 2, specification.connectorWidth / 2,
-						-cubeSpec.height / 2 ], // 3
+						-cubeSpec.height / 2 ],
 				[ cubeSpec.length / 2 - 2, cubeSpec.width / 2,
-						cubeSpec.height / 2 ], // 4 TODO: cubeSpec width is 2.
-												// the -1 need to be variable
+						cubeSpec.height / 2 ], 
 				[ cubeSpec.length / 2 - 2, cubeSpec.width / 2,
-						-cubeSpec.height / 2 ] // 5
+						-cubeSpec.height / 2 ]
 		],
 		triangles : [ [ 1, 3, 5 ], [ 4, 2, 0 ], [ 5, 4, 0 ], [ 0, 1, 5 ],
 				[ 0, 2, 1 ], [ 1, 2, 3 ], [ 2, 4, 5 ], [ 3, 2, 5 ] ]
 	});
-	// solid = solid.translate([0,1,0]);
+
 	hole = hole.union(solid);
 	solid = polyhedron({
 		points : [
-				[ cubeSpec.length / 2, -cubeSpec.width / 2, cubeSpec.height / 2 ], // 0
+				[ cubeSpec.length / 2, -cubeSpec.width / 2, cubeSpec.height / 2 ], 
 				[ cubeSpec.length / 2, -cubeSpec.width / 2,
-						-cubeSpec.height / 2 ], // 1
+						-cubeSpec.height / 2 ], 
 				[ cubeSpec.length / 2, -specification.connectorWidth / 2,
-						cubeSpec.height / 2 ], // 2 //
+						cubeSpec.height / 2 ], 
 				[ cubeSpec.length / 2, -specification.connectorWidth / 2,
-						-cubeSpec.height / 2 ], // 3
+						-cubeSpec.height / 2 ], 
 				[ cubeSpec.length / 2 - 2, -cubeSpec.width / 2,
-						cubeSpec.height / 2 ], // 4
+						cubeSpec.height / 2 ], 
 				[ cubeSpec.length / 2 - 2, -cubeSpec.width / 2,
-						-cubeSpec.height / 2 ] // 5
+						-cubeSpec.height / 2 ] 
 		],
 		triangles : [ [ 3, 1, 5 ], [ 4, 0, 2 ], [ 0, 5, 4 ], [ 1, 0, 5 ],
 				[ 0, 1, 2 ], [ 1, 3, 2 ], [ 4, 2, 5 ], [ 2, 3, 5 ] ]
 	});
-	// solid = solid.translate([0,-1,0]);
+
 	hole = hole.union(solid);
 	hole = hole.translate([
 			specification.forkLength / 2 + connectorLength - holeLength / 2, 0,

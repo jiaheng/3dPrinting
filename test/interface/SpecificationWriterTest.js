@@ -134,5 +134,4 @@ function shouldWriteSpecificationsToFile(writeFunction,
 			})					
 		})
 	})
-}
-*/
+}*/

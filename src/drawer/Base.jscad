@@ -24,12 +24,6 @@ function makeParts(specification, params) {
 			else
 				partSpecs[i].height = specification.thickness;
 		}
-		/*
-		if (partSpecs[i].height == undefined && specification.height != undefined)
-			partSpecs[i].height = specification.height;
-		else if (partSpecs[i].height == undefined && specification.height == undefined)
-			partSpecs[i].height = specification.thickness;
-		*/
 		parts.push(makePart(partSpecs[i], params))
 	}
 	;

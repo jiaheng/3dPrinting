@@ -20,11 +20,9 @@ function Anchor() {
 	const DEFAULT_CONNECT_LENGTH = 3;
 	const DEFAULT_CENTRE_HOLE_RADIUS = 3;
 	const DEFAULT_CENTRE_RING_RADIUS = 12;
-	const DEFAULT_HEIGHT = 10;
 	const DEFAULT_CONNECTOR_LENGTH = 9;
 	const DEFAULT_CONNECTOR_WIDTH = 8;
 
-	//var thickness = DEFAULT_THICKNESS; // change to constrainable value
 	var anchorLength = DEFAULT_ANCHOR_LENGTH;
 	var forkLength = DEFAULT_FORK_LENGTH;
 	var forkWidth = DEFAULT_FORK_WIDTH;
@@ -32,8 +30,7 @@ function Anchor() {
 	var connectLength = DEFAULT_CONNECT_LENGTH;
 	var centreHoleRadius = DEFAULT_CENTRE_HOLE_RADIUS;
 	var centreRingRadius = DEFAULT_CENTRE_RING_RADIUS;
-	//var height = DEFAULT_HEIGHT; // change to constrainable value
-	var anchorWidth = DEFAULT_ANCHOR_WIDTH; // CHANGE THE NAME
+	var anchorWidth = DEFAULT_ANCHOR_WIDTH; 
 	var connectorLength = DEFAULT_CONNECTOR_LENGTH;
 	var connectorWidth = DEFAULT_CONNECTOR_WIDTH;
 	var connectedSpring = null;
@@ -194,14 +191,6 @@ function Anchor() {
 	anchor.setCentreRingRadius = function(newCentreRingRadius) {
 		centreRingRadius = newCentreRingRadius;
 	}
-	
-	/*
-	 * cannot set height
-	 *
-	anchor.setHeight = function(newHeight) {
-		height = newHeight;
-	}
-	*/
 
 	anchor.setAnchorWidth = function(newAnchorWidth) {
 		anchorWidth = newAnchorWidth;
@@ -242,15 +231,6 @@ function Anchor() {
 	
 	anchor.placeWith = function(otherComponent) {
 		checkBeforePlacement(otherComponent);
-		/*
-		var centre = anchor.getCentre();
-		var connectP = anchor.getConnectPoint();
-		var otherConnectP = otherComponent.getConnectPoint();
-		var newX = otherConnectP.getX().getValue() - connectP.getX().getValue();
-		var newY = otherConnectP.getY().getValue() - connectP.getY().getValue();
-		var newZ = otherConnectP.getZ().getValue() - connectP.getZ().getValue();
-		anchor.setCentre(newX, newY, newZ);
-		*/
 		anchor.connectedSpring = otherComponent;
 		anchor.relocate();
 		otherComponent.link(anchor);
@@ -286,7 +266,6 @@ function Anchor() {
 		return [ anchor.getSpindle() ];
 	}
 
-	// TODO: change to cylinder
 	anchor.addSupport = function(floorZ) {
 		var baseCoor = anchor.getBaseCoor();
 		var bottomZ = baseCoor.getZ().getValue();

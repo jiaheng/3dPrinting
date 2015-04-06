@@ -24,6 +24,7 @@
  * edited by Jia Heng Eik
  * fix checkIfTwoRectanglesIntersectHorizontally method not working as intended
  * fix checkIfTwoRectanglesIntersect method not working as intended
+ * add check Intersect for z axis (assume circle form cylinder, rectangle form cube)
  * 
  * Checks whether Shapes intersect
  */
@@ -42,9 +43,25 @@ function ShapeIntersectionChecker() {
 	this.areIntersecting = function(firstShape, secondShape) {
 		first = firstShape
 		second = secondShape
-		return checkIfTwoShapesIntersect()
+		return checkIfTwoShapesIntersect() && checkIfIntersectAtZ();
 	}
 
+	var checkIfIntersectAtZ = function() {
+		var z1 = first.getCentre().getZ().getValue();
+		var z2 = second.getCentre().getZ().getValue();
+		var height1 = first.getHeight();
+		var height2 = second.getHeight();
+		var minZ1 = z1 - height1 / 2;
+		var maxZ1 = z1 + height1 / 2;
+		var minZ2 = z2 - height2 / 2;
+		var maxZ2 = z2 + height2 / 2;
+		if (minZ1 >= minZ2 && minZ1 <= maxZ2)
+			return true;
+		if (minZ2 >= minZ1 && minZ2 <= maxZ1)
+			return true;
+		return false;
+	}
+	
 	var checkIfTwoShapesIntersect = function() {
 		if (first.getType() == "Circle") {
 			if (second.getType() == "Circle") {
@@ -71,14 +88,13 @@ function ShapeIntersectionChecker() {
 
 	var checkIfTwoRectanglesIntersect = function() {
 		return checkIfTwoRectanglesIntersectHorizontally()
-				|| checkIfTwoRectanglesIntersectVertically()
+				&& checkIfTwoRectanglesIntersectVertically()
 	}
 
 	var checkIfTwoRectanglesIntersectHorizontally = function() {
 		var combinedLength = first.getLength() + second.getLength()
 		var centreXDifference = first.getCentre().distanceToOnAxis(
 				second.getCentre(), 'X')
-
 		return Math.abs(centreXDifference) <= (combinedLength / 2)
 	}
 
@@ -86,6 +102,8 @@ function ShapeIntersectionChecker() {
 		var combinedWidth = first.getWidth() + second.getWidth()
 		var centreYDifference = first.getCentre().distanceToOnAxis(
 				second.getCentre(), 'Y')
+		//console.log(centreYDifference + ' and ' + combinedWidth);
+		//console.log(Math.abs(centreYDifference) <= (combinedWidth / 2));
 		return Math.abs(centreYDifference) <= (combinedWidth / 2)
 	}
 

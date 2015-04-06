@@ -68,6 +68,8 @@ function Circle() {
 	}
 	
 	circle.setHeight = function(h) {
+		if (typeof h !== 'number' || isNaN(h))
+			throw new Error('height must be a number');
 		height.setValue(h);
 	}
 	

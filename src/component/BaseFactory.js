@@ -107,7 +107,13 @@ function BaseFactory() {
 	var checkSupportCollideWithComponents = function(support, index) {
 		for (var i = 0; i < components.length; i++) {
 			if (i === index) continue;
-			var shapes = components.getBoundaryShapes();
+			var shapes = components[i].getBoundaryShapes();
+			for (var j = 0; j < shapes.length; j++) {
+				if (support.isTouching(shapes[j])) {
+					var err_msg = 'base generated is collide with some components';
+					throw new Error(err_msg);
+				}
+			}
 		}
 	}
 	
