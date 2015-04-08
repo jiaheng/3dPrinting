@@ -21,6 +21,17 @@ describe('JscadCopier', function() {
 			copier.copyToTargetDir();
 		})
 
+		function removeDirContents(directory) {
+			var contents = fs.readdirSync(directory)
+			contents.forEach(function(file) {
+				fs.unlinkSync(directory + '/' + file)
+			})
+		}
+		
+		afterEach(function() {
+			removeDirContents(Config.targetDir); // remove content test output folder
+		})
+		
 		function findAllJscadFilesIn(directories) {
 			var sourceFiles = []
 			directories.forEach(function(directory) {
@@ -34,7 +45,8 @@ describe('JscadCopier', function() {
 
 		it('copy jscad files from source dir into the target dir', function() {
 			sourceFiles.forEach(function(file) {
-				fs.existsSync(targetPath + '/' + file).should.be.true;
+				var exists = fs.existsSync(targetPath + '/' + file);
+				test.bool(exists).isTrue();
 			})
 		})
 
@@ -52,7 +64,8 @@ describe('JscadCopier', function() {
 			}
 
 			it('should ensure the target directory exists', function() {
-				fs.existsSync(targetPath).should.be.true
+				var exists = fs.existsSync(targetPath);
+				test.bool(exists).isTrue();
 			})
 		})
 	})

@@ -12,6 +12,13 @@ describe('SpecificationWriter', function() {
 	var anchor;
 	var components;
 	
+	function removeDirContents(directory) {
+		var contents = fs.readdirSync(directory)
+		contents.forEach(function(file) {
+			fs.unlinkSync(directory + '/' + file)
+		})
+	}
+	
 	beforeEach(function() {
 		specWriter = new SpecificationWriter(Config.specFileTarget);
 		spring = new Spring();
@@ -19,6 +26,10 @@ describe('SpecificationWriter', function() {
 		components = [];
 		components.push(spring);
 		components.push(anchor);
+	})
+	
+	afterEach(function() {
+		removeDirContents(Config.targetDir); // remove content test output folder
 	})
 	
 	it('add component specification', function() {
@@ -36,4 +47,6 @@ describe('SpecificationWriter', function() {
 			test.bool(exists).isTrue();
 		});
 	})
+	
+	//TODO: more test!!!
 })

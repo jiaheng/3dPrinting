@@ -93,125 +93,140 @@ describe('Anchor', function () {
 			anchor.setCentreRingRadius(TEST_CENTRE_RING_RADIUS);
 			anchor.setCentreHoleRadius(TEST_CENTRE_RING_RADIUS + 1);
 			var err_msg = 'Centre hole radius should be smaller than centre ring radius';
-			(function() {
-				anchor.toSpecification()
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('connector width should be larger than connect width', function() {
 			anchor.setConnectorWidth(TEST_CONNECTOR_WIDTH - 1);
 			anchor.setConnectWidth(TEST_CONNECTOR_WIDTH);
 			var err_msg = 'Anchor connector width should be larger than connect width';
-			(function() {
-				anchor.toSpecification()
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('anchor thickness should be more than zero', function() {
 			var err_msg = 'Thickness must be more than zero';
 			anchor.setThickness(-1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('anchor length should be more than zero', function() {
 			var err_msg = 'Anchor length must be more than zero';
 			anchor.setAnchorLength(-1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('fork length should be more than zero', function() {
 			var err_msg = 'Fork length must be more than zero';
 			anchor.setForkLength(-1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('connect width should be more than zero', function() {
 			var err_msg = 'Connect width must be more than zero';
 			anchor.setConnectWidth(-1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('connect length should be more than zero', function() {
 			var err_msg = 'Connect length must be more than zero';
 			anchor.setConnectLength(-1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('centre hole radius should be more than zero', function() {
 			var err_msg = 'Centre hole radius must be more than zero';
 			anchor.setCentreHoleRadius(-1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('centre ring radius should be more than zero', function() {
 			var err_msg = 'Centre ring radius must be more than zero';
 			anchor.setCentreRingRadius(-1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('anchor width should be more than zero', function() {
 			var err_msg = 'Anchor width must be more than zero';
 			anchor.setAnchorWidth(-1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('connector length should be more than zero', function() {
 			var err_msg = 'Connector length must be more than zero';
 			anchor.setConnectorLength(-1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('connector width should be more than zero', function() {
 			var err_msg = 'Connector width must be more than zero';
 			anchor.setConnectorWidth(-1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('fork length should larger than centre ring radius', function() {
 			var err_msg = 'Fork length should be larger than centre ring radius';
 			anchor.setForkLength(TEST_FORK_LENGTH);
 			anchor.setCentreRingRadius(TEST_FORK_LENGTH + 1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('anchor length should larger than centre ring radius', function() {
 			var err_msg = 'Anchor length should be larger than centre ring radius';
 			anchor.setAnchorLength(TEST_ANCHOR_LENGTH);
 			anchor.setCentreRingRadius(TEST_ANCHOR_LENGTH + 1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('connector length should be larger than connect length', function() {
 			var err_msg = 'Anchor connector length should be larger than connect length';
 			anchor.setConnectLength(TEST_CONNECT_LENGTH);
 			anchor.setConnectorLength(TEST_CONNECT_LENGTH - 1);
-			(function() {
-				anchor.toSpecification();
-			}).should.throw(err_msg);
+			test
+				.error(anchor.toSpecification)
+					.is(new Error(err_msg))
+			;
 		})
 		
 		it('test connecting point coordinate', function() {
