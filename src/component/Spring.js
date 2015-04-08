@@ -181,7 +181,7 @@ function Spring() {
 			throw new Error("Spring can only place with an anchor");
 		
 		var diff = spring.getRoundedCubeWidth() - otherComponent.getConnectWidth(); 
-		if (Math.abs(diff) > 0.001)
+		if (Math.abs(diff) > 0.01)
 			throw new Error('Unable to place string with the anchor: the rounded cube width is not the same as connect width');
 	}
 	
