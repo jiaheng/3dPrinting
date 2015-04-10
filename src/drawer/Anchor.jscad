@@ -97,7 +97,7 @@ Anchor.make = function(specification, params) {
 	anchor = anchor.union(fork);
 
 	// left side anchor
-	var deg = 180 - 120; // the angle between pallets is 120 degree
+	var deg = 180 - 120; // the angle between anchor is 120 degree
 	cubeSpec.length = specification.anchorLength;
 	cubeSpec.width = specification.anchorWidth;
 	cubeSpec.height = specification.thickness;
