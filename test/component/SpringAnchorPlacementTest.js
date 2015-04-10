@@ -131,7 +131,7 @@ describe('Spring/Anchor Placement', function() {
 		var connectWidth = 4;
 		var connectLength = 3;
 		
-		var err_msg = 'Unable to place string with the anchor: the rounded cube width is not the same as connect width';
+		var err_msg = 'Unable to place spring with the anchor: the rounded cube width is not the same as connect width';
 		
 		spring.setRoundedCubeLength(roundedCubeLength);
 		spring.setRoundedCubeWidth(roundedCubeWidth);
@@ -170,6 +170,54 @@ describe('Spring/Anchor Placement', function() {
 		}).should.throw(err_msg);
 	})
 	
+	it('spring place with anchor with invalid rounded cube height', function() {
+		var roundedCubeLength = 5;
+		var roundedCubeWidth = 4; 
+		var roundedCubeHeight = 9; // less than anchor thickness
+		
+		var anchorThickness = 10;
+		var connectWidth = 4;
+		var connectLength = 3;
+		
+		var err_msg = 'Unable to place spring with the anchor: the rounded cube height less than anchor thickness';
+		
+		spring.setRoundedCubeLength(roundedCubeLength);
+		spring.setRoundedCubeWidth(roundedCubeWidth);
+		spring.setRoundedCubeHeight(roundedCubeHeight);
+		
+		anchor.setThickness(anchorThickness);
+		anchor.setConnectWidth(connectWidth);
+		anchor.setConnectLength(connectLength);
+		
+		(function() {
+			spring.placeWith(anchor);
+		}).should.throw(err_msg);
+	})
+	
+	it('spring place with anchor with invalid rounded cube height', function() {
+		var roundedCubeLength = 5;
+		var roundedCubeWidth = 4; 
+		var roundedCubeHeight = 9; // less than anchor thickness
+		
+		var anchorThickness = 10;
+		var connectWidth = 4;
+		var connectLength = 3;
+		
+		var err_msg = 'Unable to place anchor with the spring: the rounded cube height less than anchor thickness';
+		
+		spring.setRoundedCubeLength(roundedCubeLength);
+		spring.setRoundedCubeWidth(roundedCubeWidth);
+		spring.setRoundedCubeHeight(roundedCubeHeight);
+		
+		anchor.setThickness(anchorThickness);
+		anchor.setConnectWidth(connectWidth);
+		anchor.setConnectLength(connectLength);
+		
+		(function() {
+			anchor.placeWith(spring);
+		}).should.throw(err_msg);
+	})
+	
 	it('spring cannot place with a spring', function() {
 		var spring2 = new Spring();
 		var err_msg = 'Spring can only place with an anchor';
@@ -187,13 +235,13 @@ describe('Spring/Anchor Placement', function() {
 	})
 	
 	it('spring can only place with ONLY one anchor', function() {
-		should(spring.isPlaceWithAnchor()).be.false;
+		test.bool(spring.isPlaceWithAnchor()).isFalse();
 		
 		var anchor2 = new Anchor();
 		var err_msg = 'Spring already connected with another anchor';
 		spring.placeWith(anchor);
 		
-		should(spring.isPlaceWithAnchor()).be.true;
+		test.bool(spring.isPlaceWithAnchor()).isTrue();
 		
 		(function() {
 			spring.placeWith(anchor2);
@@ -205,11 +253,11 @@ describe('Spring/Anchor Placement', function() {
 		spring.placeWith(anchor);
 		spring.unlink();
 		
-		should(spring.isPlaceWithAnchor()).be.false;
+		test.bool(spring.isPlaceWithAnchor()).isFalse();
 		
 		spring.placeWith(anchor2);
 		
-		should(spring.isPlaceWithAnchor()).be.true;
+		test.bool(spring.isPlaceWithAnchor()).isTrue();
 	})
 	
 	it('moving spring also moving its connected anchor', function() {
@@ -249,13 +297,13 @@ describe('Spring/Anchor Placement', function() {
 	})
 	
 	it('anchor can only place with ONLY one spring', function() {
-		should(anchor.isPlaceWithSpring()).be.false;
+		test.bool(anchor.isPlaceWithSpring()).isFalse();
 		
 		var spring2 = new Spring();
 		var err_msg = 'Anchor already connected with another spring';
 		anchor.placeWith(spring);
 		
-		should(anchor.isPlaceWithSpring()).be.true;
+		test.bool(anchor.isPlaceWithSpring()).isTrue();
 		
 		(function() {
 			anchor.placeWith(spring2);
@@ -263,15 +311,15 @@ describe('Spring/Anchor Placement', function() {
 	})
 	
 	it('anchor can only place with ONLY one spring2', function() {
-		should(anchor.isPlaceWithSpring()).be.false;
-		should(spring.isPlaceWithAnchor()).be.false;
+		test.bool(anchor.isPlaceWithSpring()).isFalse();
+		test.bool(spring.isPlaceWithAnchor()).isFalse();
 		
 		var spring2 = new Spring();
 		var err_msg = 'Anchor already connected with another spring';
 		anchor.placeWith(spring);
 		
-		should(anchor.isPlaceWithSpring()).be.true;
-		should(spring.isPlaceWithAnchor()).be.true;
+		test.bool(anchor.isPlaceWithSpring()).isTrue();
+		test.bool(spring.isPlaceWithAnchor()).isTrue();
 		
 		(function() {
 			anchor.placeWith(spring2);
@@ -283,11 +331,11 @@ describe('Spring/Anchor Placement', function() {
 		anchor.placeWith(spring);
 		anchor.unlink();
 		
-		should(anchor.isPlaceWithSpring()).be.false;
+		test.bool(anchor.isPlaceWithSpring()).isFalse();
 		
 		anchor.placeWith(spring2);
 		
-		should(anchor.isPlaceWithSpring()).be.true;
+		test.bool(anchor.isPlaceWithSpring()).isTrue();
 	})
 	
 	it('anchor can connect to another spring after unlink with previous spring', function() {
@@ -295,14 +343,14 @@ describe('Spring/Anchor Placement', function() {
 		anchor.placeWith(spring);
 		anchor.unlink();
 		
-		should(anchor.isPlaceWithSpring()).be.false;
-		should(spring.isPlaceWithAnchor()).be.false;
+		test.bool(anchor.isPlaceWithSpring()).isFalse();
+		test.bool(spring.isPlaceWithAnchor()).isFalse();
 		
 		anchor.placeWith(spring2);
 		
-		should(anchor.isPlaceWithSpring()).be.true;
-		should(spring2.isPlaceWithAnchor()).be.true;
-		should(spring.isPlaceWithAnchor()).be.false;
+		test.bool(anchor.isPlaceWithSpring()).isTrue();
+		test.bool(spring2.isPlaceWithAnchor()).isTrue();
+		test.bool(spring.isPlaceWithAnchor()).isFalse();
 	})
 	
 	it('moving anchor also moving its connected spring', function() {
@@ -361,17 +409,17 @@ describe('Spring/Anchor Placement', function() {
 		anchor.setCentre(0, 0 ,0);
 		spring.placeWith(anchor);
 
-		should(anchor.isPlaceWithSpring()).be.true;
-		should(spring.isPlaceWithAnchor()).be.true;
+		test.bool(anchor.isPlaceWithSpring()).isTrue();
+		test.bool(spring.isPlaceWithAnchor()).isTrue();
 		
 		anchor.setCentre(10, 20, 30);
 		
-		should(anchor.isPlaceWithSpring()).be.true;
-		should(spring.isPlaceWithAnchor()).be.true;
+		test.bool(anchor.isPlaceWithSpring()).isTrue();
+		test.bool(spring.isPlaceWithAnchor()).isTrue();
 		
 		spring.setCentre(10, 20, 30);
-		should(anchor.isPlaceWithSpring()).be.true;
-		should(spring.isPlaceWithAnchor()).be.true;
+		test.bool(anchor.isPlaceWithSpring()).isTrue();
+		test.bool(spring.isPlaceWithAnchor()).isTrue();
 		
 		var point = spring.getCentre();
 		should(point.getX().getValue()).be.equal(10);
@@ -407,18 +455,18 @@ describe('Spring/Anchor Placement', function() {
 		spring.setCentre(0, 0 ,0);
 		anchor.placeWith(spring);
 
-		should(anchor.isPlaceWithSpring()).be.true;
-		should(spring.isPlaceWithAnchor()).be.true;
+		test.bool(anchor.isPlaceWithSpring()).isTrue();
+		test.bool(spring.isPlaceWithAnchor()).isTrue();
 		
 		spring.setCentre(10, 20, 30);
 		
-		should(anchor.isPlaceWithSpring()).be.true;
-		should(spring.isPlaceWithAnchor()).be.true;
+		test.bool(anchor.isPlaceWithSpring()).isTrue();
+		test.bool(spring.isPlaceWithAnchor()).isTrue();
 		
 		anchor.setCentre(10, 20, 30);
 		
-		should(anchor.isPlaceWithSpring()).be.true;
-		should(spring.isPlaceWithAnchor()).be.true;
+		test.bool(anchor.isPlaceWithSpring()).isTrue();
+		test.bool(spring.isPlaceWithAnchor()).isTrue();
 		
 		var point = anchor.getCentre();
 		should(point.getX().getValue()).be.equal(10);

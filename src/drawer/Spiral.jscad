@@ -16,9 +16,10 @@ Spiral.make = function(specification, params) {
 	var max_r = specification.maxRadius;
 	
 	var max_slices = (rotation * max_r) / 10 * params.circleRes;
+	
 	var total_rad = Math.PI * 2 * rotation;
 	var total_deg = 360 * rotation;
-	var rIncrement = (max_r - startR) / max_slices;
+	var rIncrement = (max_r - startR); // constant (a)
 
 	if (specification.startRadius != undefined) {
 		startR = specification.startRadius;
@@ -40,16 +41,16 @@ Spiral.make = function(specification, params) {
 	return rec.solidFromSlices({
 		numslices : max_slices,
 		callback : function(t, slice) {
-			var rad = slice / max_slices * total_rad;
-			// r = a + b theta
-			var r = rIncrement * slice + startR;
+			var t = slice / max_slices;
+			var rad = t * total_rad; // convert t to rad
+			var r = rIncrement * t + startR; // r = a t + c
 			if (r > max_r)
 				throw new Error("more than max R!!!\nslice: " + slice
 						+ "\nmax: " + max_slices + "\nr: " + r + "\nmaxr "
 						+ max_r + "rIncre: " + rIncrement);
 			var x = r * Math.cos(rad);
 			var y = r * Math.sin(rad);
-			return this.rotateZ(slice / max_slices * total_deg).translate(
+			return this.rotateZ(t * total_deg).translate(
 					[ x, y, 0 ]);
 		}
 	});

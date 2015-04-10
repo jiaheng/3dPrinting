@@ -8,7 +8,7 @@ const MAIN_METHOD = 'function main(params) {\n' +
 
 const PARAMS_METHOD_START = '\nfunction getParameterDefinitions() {\n\treturn [';
 const PARAMS_METHOD_END = '];\n}\n\n';
-const STATIC_PARAMETER_PATH = __dirname + '/parameterDefinitions.txt';
+const STATIC_PARAMETER_PATH = __dirname + '/parameterDefinitions';
 
 function MainWriter(mainPath, jscadDirectories) {
 

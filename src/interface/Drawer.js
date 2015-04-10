@@ -28,19 +28,15 @@ function Drawer(configuration) {
 		return components;
 	}
 	
-	var checkCollision = function() {
+	this.checkCollision = function() {
 		for (var i = 0; i < components.length - 1; i++) {
 			for (var j = i + 1; j < components.length; j++) {
-				if (components[i].isCollideWith(components[j]))
-					// TODO: error need check
-					throw new Error('Component are colliding');
+				components[i].checkCollideWith(components[j]);
 			}
 		}
 	}
 	
 	this.generateJscad = function() {
-		//TODO: need to fix checkCollision method
-		//checkCollision();
 		jscadCopier.copyToTargetDir();
 		specWriter.generateSpec(components);
 		mainWriter.generateFile(components);

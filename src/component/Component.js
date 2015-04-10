@@ -81,7 +81,9 @@ function Component(boundaryShape) {
 			for (var i = 0; i < shapes.length; i++) {
 				for (var j = 0; j < otherShapes.length; j++) {
 					if (shapes[i].isTouching(otherShapes[j])) {
-						var err_msg = this.getTypeName() + ' is collide with ' + component.getTypeName();
+						var err_msg = this.getTypeName() + ' is collide with ' + component.getTypeName() + ':\n';
+						err_msg += this.toString() + '\n\nand\n\n';
+						err_msg += component.toString();
 						throw new Error(err_msg);
 					}
 				}

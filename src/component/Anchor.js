@@ -227,6 +227,8 @@ function Anchor() {
 		var diff = anchor.getConnectWidth() - otherComponent.getRoundedCubeWidth();
 		if (Math.abs(diff) > 0.001)
 			throw new Error('Unable to place anchor with the spring: the rounded cube width is not the same as connect width');
+		if (anchor.getThickness() > otherComponent.getRoundedCubeHeight())
+			throw new Error('Unable to place anchor with the spring: the rounded cube height less than anchor thickness');
 	}
 	
 	anchor.placeWith = function(otherComponent) {

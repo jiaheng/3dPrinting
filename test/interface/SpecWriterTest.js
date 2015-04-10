@@ -11,6 +11,8 @@ describe('SpecificationWriter', function() {
 	var spring;
 	var anchor;
 	var components;
+	var filename = Config.specFileTarget;
+	var fileContent;
 	
 	function removeDirContents(directory) {
 		var contents = fs.readdirSync(directory)
@@ -20,7 +22,7 @@ describe('SpecificationWriter', function() {
 	}
 	
 	beforeEach(function() {
-		specWriter = new SpecificationWriter(Config.specFileTarget);
+		specWriter = new SpecificationWriter(filename);
 		spring = new Spring();
 		anchor = new Anchor();
 		components = [];
@@ -43,10 +45,22 @@ describe('SpecificationWriter', function() {
 	it('write specification to target file', function()	{
 		specWriter.addAllComponents(components);
 		specWriter.writeSpecificationToFile();
-		fs.exists(Config.specFileTarget, function(exists) {
+		fs.exists(filename, function(exists) {
 			test.bool(exists).isTrue();
 		});
 	})
 	
-	//TODO: more test!!!
+	it('contains specification of both components in correct format', function() {
+		var compSpec = [];
+		compSpec.push(spring.toSpecification());
+		compSpec.push(anchor.toSpecification());
+		var expected = JSON.stringify(compSpec, null, 2);
+		
+		specWriter.addAllComponents(components);
+		specWriter.writeSpecificationToFile();
+		fs.readFile(filename, 'utf8', function (err, data) {
+			  if (err) throw err;
+			  data.should.containEql(expected);
+		});
+	})
 })

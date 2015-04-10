@@ -45,5 +45,11 @@ function Base() {
 		return new BaseSpecification(base)
 	}
 
+	base.checkCollideWith = function(component) {}
+	
+	base.getBoundaryShapes = function() {
+		return []
+	}
+	
 	return base
 }

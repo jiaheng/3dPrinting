@@ -9,7 +9,11 @@ var spring = new Spring();
 var anchor = new Anchor();
 var baseFactory = new BaseFactory();
 
-spring.setCentre(0,0,0);
+anchor.setConnectLength(6);
+anchor.setConnectWidth(4);
+spring.setRoundedCubeWidth(4);
+spring.setRoundedCubeLength(4);
+
 anchor.placeWith(spring);
 
 allComponents.push(spring);
@@ -17,7 +21,5 @@ allComponents.push(anchor);
 var base = baseFactory.makeBase(allComponents);
 allComponents.push(base);
 
-drawer.addComponent(spring);
-drawer.addComponent(anchor);
-drawer.addComponent(base);
+drawer.addAllComponents(allComponents);
 drawer.generateJscad();

@@ -182,7 +182,9 @@ function Spring() {
 		
 		var diff = spring.getRoundedCubeWidth() - otherComponent.getConnectWidth(); 
 		if (Math.abs(diff) > 0.01)
-			throw new Error('Unable to place string with the anchor: the rounded cube width is not the same as connect width');
+			throw new Error('Unable to place spring with the anchor: the rounded cube width is not the same as connect width');
+		if (spring.getRoundedCubeHeight() < otherComponent.getThickness())
+			throw new Error('Unable to place spring with the anchor: the rounded cube height less than anchor thickness');
 	}
 	
 	spring.placeWith = function(otherComponent) {
@@ -278,7 +280,7 @@ function Spring() {
 		if (spring.getCentreHoleRadius() >= spring.getInnerCylinderRadius())
 			throw new Error('Centre hole should be smaller than inner cylinder radius');
 	}
-	
+		
 	spring.toSpecification = function() {
 		checkParameter();
 		return new SpringSpecification(spring);

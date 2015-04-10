@@ -110,7 +110,8 @@ function BaseFactory() {
 			var shapes = components[i].getBoundaryShapes();
 			for (var j = 0; j < shapes.length; j++) {
 				if (support.isTouching(shapes[j])) {
-					var err_msg = 'base generated is collide with some components';
+					var err_msg = 'base generated is collide with some components: \n';
+					err_msg += components[i].toString();
 					throw new Error(err_msg);
 				}
 			}
