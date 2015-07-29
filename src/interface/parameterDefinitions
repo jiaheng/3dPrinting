@@ -10,11 +10,4 @@
 		  captions: ["Very low (impractical - for testing)", "Low", "Medium", "High (for printing)"],  
 		  caption: 'Resolution of curves:',                           
 		  initial: 4                            
-		}/*,
-  	{
-		  name: 'showID',
-		  type: 'choice',
-		  values: ["No", "Yes"],   // Booleans don't work
-		  caption: 'Display Component IDs:',                           
-		  initial: "No"                            
-		}*/
+		}

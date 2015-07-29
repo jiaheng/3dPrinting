@@ -42,7 +42,7 @@ function RackSupport() {
 	var toothedFace
 	baseHeight.setValue(DEFAULT_BASE_WIDTH)
 	var wall = new Rectangle()
-	wall.getLength().sameAs(support.getBoundingShape().getLength())
+	wall.getLengthConstrainable().sameAs(support.getBoundingShape().getLengthConstrainable())
 	var wallCentre = wall.getCentre()
 
 	support.getTypeName = function() {
@@ -51,14 +51,20 @@ function RackSupport() {
 
 	support.getLength = support.getBoundingShape().getLength
 
+	support.getLengthConstrainable = support.getBoundingShape().getLengthConstrainable
+	
 	support.setLength = support.getBoundingShape().setLength
-
+	
 	support.getWidth = support.getBoundingShape().getWidth
 
+	support.getWidthConstrainable = support.getBoundingShape().getWidthConstrainable
+	
 	support.setWidth = support.getBoundingShape().setWidth
 
 	support.getWallWidth = wall.getWidth 
 
+	support.getWallWidthConstrainable = wall.getWidthConstrainable
+	
 	support.setWallWidth = function(w) {
 		wall.setWidth(w)
 	}
@@ -101,11 +107,11 @@ function RackSupport() {
 	}
 
 	var checkFullySpecified = function() { 
-		if (support.getLength().isNotSet()) throw new Error("Length not set")
-		if (support.getWidth().isNotSet()) throw new Error("Width not set")
+		if (support.getLengthConstrainable().isNotSet()) throw new Error("Length not set")
+		if (support.getWidthConstrainable().isNotSet()) throw new Error("Width not set")
 		if (support.getBaseHeight().isNotSet()) throw new Error("Base height not set")
 		if (support.getWallHeight().isNotSet()) throw new Error("Wall height not set")
-		if (support.getWallWidth().isNotSet()) throw new Error("Wall width not set")
+		if (support.getWallWidthConstrainable().isNotSet()) throw new Error("Wall width not set")
 		if (wall.getCentre().isNotFullyDefined()) 
 			throw new Error("Wall centre not fully defined")
 		if (toothedFace == null) throw new Error("Toothed face not set")

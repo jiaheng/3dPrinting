@@ -50,6 +50,10 @@ function Rectangle() {
 		return width.getValue();
 	}
 
+	rectangle.getWidthConstrainable = function() {
+		return width;
+	}
+	
 	rectangle.setWidth = function(w) {
 		width.setValue(w);
 	}
@@ -58,6 +62,10 @@ function Rectangle() {
 		return length.getValue();
 	}
 
+	rectangle.getLengthConstrainable = function() {
+		return length;
+	}
+	
 	rectangle.setLength = function(len) {
 		length.setValue(len);
 	}
